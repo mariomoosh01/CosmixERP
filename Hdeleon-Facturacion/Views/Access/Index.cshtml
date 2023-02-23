@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Iniciar sesión";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header">Inicio de sesión</div>
+        <div class="card-body">
+         @using (Html.BeginForm("Login", "Access", FormMethod.Post, new { id="frm"}))
+         {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label for="inputEmail">Correo electrónico</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
+                        
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Contraseña</label>
+                        <input class="form-control" type="password" name="password" placeholder="Password" required="required" /><br />
+                        
+                </div>
+
+                <div style="text-align:center;">
+                    <input type="submit" value="Entrar" class="btn btn-success" />
+                </div>
+
+         }
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+
+        $("#frm").submit(function (e) {
+            e.preventDefault();
+
+            url = "@Url.Content("~/Access/Login")"
+           
+            params = $(this).serialize();
+            $.post(url, params, function (data) {
+                if (data == "1") {
+                    document.location.href="@Url.Content("~/")"
+                }else{
+                    alert(data);
+                }
+            })
+        })
+    })
+</script>
+
+ }

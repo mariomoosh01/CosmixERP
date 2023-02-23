@@ -1,0 +1,371 @@
+﻿@model Hdeleon_Facturacion.Models.ViewModels.InvoiceViewModel
+@{
+    Layout = null;
+    var base64 = Convert.ToBase64String(Model.QR);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+
+<body style="font-family:Arial;">
+    <div>
+        <div style="width:30%; float:left;">
+            @if (Model.Logotipo != null && Model.Logotipo.Equals(""))
+            {
+                @Html.Raw("&nbsp;");
+            }
+            else
+            {
+                <img src="~/@Html.Raw(Hdeleon_Facturacion.Business.Constants.PathLogo)" style="width:90%;" />
+            }
+
+        </div>
+        <div style="width:70%; float:left;">
+            <h3>@Model.NombreEmisor</h3>
+            <p>
+                <b>Folio: </b>@Model.Folio <b>Serie: </b>@Model.sSerie
+            </p>
+
+            <p>
+                <b>Folio fiscal: </b>@Model.UUID<br />
+                <b>RFC: </b>@Model.RFCEmisor<br />
+                <b>Razón social: </b>@Model.RazonSocialEmisor<br />
+                <span style="display:none;">
+                    <b>Domicilio fiscal: </b>
+                    @Model.CalleFiscal # @Model.NoExteriorFiscal
+                    @if (Model.NoInteriorFiscal != null && Model.NoInteriorFiscal != "")
+                    {
+                        @Html.Raw(" - " + Model.NoInteriorFiscal);
+                    }
+                    @Model.ColoniaFiscal, @Model.MunicipioFiscal, @Model.EstadoFiscal, @Model.PaisFiscal
+
+                    <br />
+                    <b>CP de expedición: </b>@Model.LugarExpedicion<br />
+                </span>
+            </p>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    @if (Model.TipoRelacion != null && Model.TipoRelacion != "")
+    {
+        <br />
+        <div>
+            <div>
+                <b>CFDI Relacionados: </b>
+                @{
+                    string[] arrUUIDRel = Model.UUIDRelacionados.Split(',');
+                    int iUUIDRel = 0;
+                    foreach (string UUIDRel in arrUUIDRel)
+                    {
+                        string coma = "";
+                        if (iUUIDRel > 0)
+                        {
+                            coma = ", ";
+                        }
+
+                        @Html.Raw(coma + UUIDRel);
+
+                    iUUIDRel++;
+                }
+                }
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+                    }
+    <br />
+    <div>
+        <div style="width:50%; float:left;">
+            <b>Cliente (RFC): </b>@Model.RFCCliente<br />
+            <b>Nombre: </b>@Model.RazonSocial
+        </div>
+        <div style="width:50%; float:left;">
+            <b>Domicilio cliente</b><br />
+            @Model.Calle @Model.NoExterior @Model.NoInterior @if (Model.CP != null)
+            { @Html.Raw("C.P. " + Model.CP);
+            } @Model.sMunicipio @Model.sEstado @Model.Pais
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+
+    <br />
+    <div>
+        <div>
+            <table style="width:100%;font-size:12px;">
+                <tr>
+                    <th style="width:15%">Clave y unidad SAT</th>
+
+                    <th style="width:10%">Cantidad</th>
+                    <th>Descripción</th>
+                    <th style="text-align:right;width:12%;">Valor unitario</th>
+                    <th style="text-align:right;width:15%;">Descuento</th>
+                    <th style="text-align:right;width:15%;">Importe</th>
+                </tr>
+                @foreach (Hdeleon_Facturacion.Models.ViewModels.InvoiceViewModel.Concepto oConcepto in Model.conceptos)
+                {
+                    <tr>
+                        <td style="text-align:center;">@oConcepto.claveProducto - @oConcepto.claveUnidad</td>
+
+                        <td style="text-align:center;">@oConcepto.cantidad</td>
+                        <td style="text-align:center;">@oConcepto.descripcion</td>
+                        <td style="text-align:right;">$ @oConcepto.precioUnitario.ToString("0,0.00")</td>
+                        <td style="text-align:right;">
+                            $
+                            @if (oConcepto.descuento == null || oConcepto.descuento <= 0)
+                            {
+                                @("0.00");
+                            }
+                            else
+                            {
+                                decimal desc = (decimal)oConcepto.descuento;
+                                @desc.ToString("0,0.00")
+                            }
+                        </td>
+                        <td style="text-align:right;">
+                            $ @{
+                                decimal importe = oConcepto.cantidad * oConcepto.precioUnitario;
+                                @importe.ToString("0,0.00")
+                            }
+                        </td>
+                    </tr>
+                                if (oConcepto.cuentaPredial != null && oConcepto.cuentaPredial != "")
+                                {
+                                    <tr style="font-family:arial; font-style:italic;">
+                                        <td></td>
+                                        <td colspan="2">Cuenta predial: @oConcepto.cuentaPredial</td>
+                                    </tr>
+                                }
+                               
+                                if (oConcepto.impuestos != null && oConcepto.impuestos.Count() > 0)
+                                {
+                                    //AGREGAMOS LOS impuestos
+                                    foreach (Hdeleon_Facturacion.Models.ViewModels.InvoiceViewModel.Impuesto oImpuesto in oConcepto.impuestos)
+                                    {
+
+                                        <tr style="font-family:arial; font-style:italic;">
+                                            <td></td>
+
+                                            <td style="text-align:center;">@oImpuesto.nombre</td>
+                                            <td style="text-align:center;">@oImpuesto.factor: @oImpuesto.tasa</td>
+                                            <td style="text-align:center;">@oImpuesto.tipo</td>
+                                            <td style="text-align:center;">@oImpuesto.ambito</td>
+                                            <td style="text-align:right;">$ @oImpuesto.importe</td>
+                                        </tr>
+                                        }
+
+                                    }
+                                }
+                <tr>
+                    <td colspan="4"></td>
+                    <td style="text-align:right;">
+                        <b>Subtotal:</b>
+                    </td>
+                    <td style="text-align:right;">$ @Model.Subtotal.ToString("0,0.00")</td>
+                </tr>
+                @if (Model.totalIvaTrasladado > 0)
+                {
+
+                    <tr>
+                        <td colspan="4"></td>
+                        <td style="text-align:right;">
+                            <b>IVA Trasladado:</b>
+                        </td>
+                        <td style="text-align:right;">$ @Model.sTotalIVATrasladado</td>
+                    </tr>
+                }
+                @if (Model.totalIEPSTrasladado > 0)
+                {
+                    <tr>
+                        <td colspan="4"></td>
+                        <td style="text-align:right;">
+                            <b>IEPS Trasladado:</b>
+                        </td>
+                        <td style="text-align:right;">$ @Model.sTotalIEPSTrasladado</td>
+                    </tr>
+                }
+                @if (Model.totalIVARetenido > 0)
+                {
+                    <tr>
+                        <td colspan="4"></td>
+                        <td style="text-align:right;">
+                            <b>IVA Retenido:</b>
+                        </td>
+                        <td style="text-align:right;">$ @Model.sTotalIVARetenido</td>
+                    </tr>
+                }
+                @if (Model.totalIEPSRetenido > 0)
+                {
+                    <tr>
+                        <td colspan="4"></td>
+                        <td style="text-align:right;">
+                            <b>IEPS Retenido:</b>
+                        </td>
+                        <td style="text-align:right;">$ @Model.sTotalIEPSRetenido</td>
+                    </tr>
+                }
+                @if (Model.totalISRRetenido > 0)
+                {
+                    <tr>
+                        <td colspan="4"></td>
+                        <td style="text-align:right;">
+                            <b>ISR Retenido:</b>
+                        </td>
+                        <td style="text-align:right;">$ @Model.sTotalISRRetenido</td>
+                    </tr>
+                }
+                @if (Model.TotalLocalTraslado > 0)
+                {
+                    <tr>
+                        <td colspan="4"></td>
+                        <td style="text-align:right;">
+                            <b>Impuestos locales trasladados:</b>
+                        </td>
+                        <td style="text-align:right;">$ @Model.sTotalLocalTraslado</td>
+                    </tr>
+                }
+                @if (Model.TotalLocalRetenido > 0)
+                {
+                    <tr>
+                        <td colspan="4"></td>
+                        <td style="text-align:right;">
+                            <b>Impuestos locales retenidos:</b>
+                        </td>
+                        <td style="text-align:right;">$ @Model.sTotalLocalRetenido</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td colspan="4"></td>
+                    <td style="text-align:right;">
+                        <b>Descuento:</b>
+                    </td>
+                    <td style="text-align:right;">
+                        $ @if (Model.TotalDescuento > 0)
+                        {
+                            @Model.TotalDescuento.ToString("0,0.00")
+
+                        }
+                        else
+                        {
+                            @Html.Raw("0.00")
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        @{
+                            string sMoneda = "PESOS";
+                            if (Model.Moneda == "USD")
+                            {
+                                sMoneda = "DOLARES";
+                            }
+                            if (Model.Moneda == "EUR")
+                            {
+                                sMoneda = "EUROS";
+                            }
+
+                            Hdeleon_Facturacion.Business.Tools.Coin nl = new Hdeleon_Facturacion.Business.Tools.Coin();
+                            @Html.Raw(nl.Convertir(Model.Total.ToString("#.00"), true, sMoneda));
+                        }
+                    </td>
+                    <td style="text-align:right;">
+                        <b>Total:</b>
+                    </td>
+                    <td style="text-align:right;">$ @Model.Total.ToString("0,0.00")</td>
+                </tr>
+            </table>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+
+    <!-- complementos-->
+   
+
+    <!-- /complementos -->
+    <!-- complementos-->
+    <!-- DONATARIAS -->
+    @if (Model.Observacion != null && Model.Observacion != "")
+    {
+        <br />
+        <div>
+            <b>Observación: </b>@Model.Observacion<br />
+        </div>
+    }
+
+    <!-- /complementos -->
+
+    <br /><br /><br />
+    <div>
+        <div style="" class="textoContiguo">
+            <b>Sello Digital del Emisor: </b><br />
+            <span style="font-size:11px;">
+                @Model.Sello
+            </span>
+        </div><br />
+        <div>
+            <b>Cadena Original del Timbre: </b><br />
+            <span style="font-size:11px;">
+                @Model.CadenaOriginal
+            </span>
+        </div>
+
+        <div style="clear:both;"></div>
+    </div>
+    <br /><br />
+    <div>
+        <div style="width:30%; float:left;">
+            <img src="@imgSrc" width="250" height="250" />
+        </div>
+        <div style="width:70%; float:left;font-size:11px;">
+            <div style="text-align:center;">
+                <b>Este documento es una representación impresa de un CFDI.</b>
+            </div><br />
+            <div style="line-height:17px;">
+                <div style="width:33%; float:left; text-align:center;">
+                    <b>Fecha emisión:</b><br />
+                    @Model.Fecha<br /><br />
+                    <b>Regimen fiscal:</b><br />
+                    @Model.RegimenFiscal - @Model.sRegimenFiscal<br /><br />
+                    <b>Uso CFDI:</b><br />
+                    @Model.UsoCFDI - @Model.sUsoCFDI<br /><br />
+                </div>
+                <div style="width:33%; float:left; text-align:center">
+                    <b>Fecha certificación:</b><br />
+                    @Model.FechaTimbre<br /><br />
+                    <b>CSD emisor:</b><br />
+                    @Model.NoCertificado<br /><br />
+                    <b>CSD SAT:</b><br />
+                    @Model.NoCertificadoSAT<br /><br />
+                </div>
+                <div style="width:33%; float:left; text-align:center;">
+                    <b>Tipo de comprobante:</b><br />
+                    @Model.tipoComprobante - @Model.sTipoComprobante<br /><br />
+                    <b>Forma de pago:</b><br />
+                    @Model.FormaPago - @Model.sFormaPago<br /><br />
+                    <b>Método de pago:</b><br />
+                    @Model.TipoDePago - @Model.sTipoDePago<br />
+                </div>
+
+
+                <div style="clear:both;"></div>
+            </div>
+            <div style="font-size:12px;line-height:16px;">
+                <b>Sello Digital SAT</b><br /><br />
+                <div class="textoContiguo">
+                    @Model.SelloSAT
+                </div>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+
+</body>
+
+<style>
+    .textoContiguo {
+        -ms-word-break: break-all;
+        word-break: break-all;
+        word-break: break-word; /* Sólo WebKit -NO DOCUMENTADO */
+        -ms-hyphens: auto; /* Guiones para separar en sílabas */
+        -moz-hyphens: auto; /*  depende de lang en <html>      */
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+</style>

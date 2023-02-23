@@ -1,0 +1,808 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="satEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="c_meses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clave" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="c_periodicidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clave" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cexportacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clave" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cobjetoimpuesto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clave" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="f4_c_aduana">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_Aduana" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_caducidadfolios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="diasCaducidad" Type="int" Nullable="false" />
+          <Property Name="porcentajeCaducidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="f4_c_claveprodserv">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_ClaveProdServ" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="Incluir IVA trasladado" Type="varchar" MaxLength="255" />
+          <Property Name="Incluir IEPS trasladado" Type="varchar" MaxLength="255" />
+          <Property Name="Complemento que debe incluir" Type="varchar" MaxLength="255" />
+          <Property Name="FechaInicioVigencia" Type="varchar" MaxLength="255" />
+          <Property Name="FechaFinVigencia" Type="varchar" MaxLength="255" />
+          <Property Name="Palabras similares" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_claveunidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_ClaveUnidad" Type="varchar" MaxLength="255" />
+          <Property Name="Nombre" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="Nota" Type="varchar" MaxLength="255" />
+          <Property Name="Fechadeiniciodevigencia" Type="varchar" MaxLength="255" />
+          <Property Name="Fechadefindevigencia" Type="varchar" MaxLength="255" />
+          <Property Name="Simbolo" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_codigopostal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_CodigoPostal" Type="varchar" MaxLength="255" />
+          <Property Name="c_Estado" Type="varchar" MaxLength="255" />
+          <Property Name="c_Municipio" Type="varchar" MaxLength="255" />
+          <Property Name="c_Localidad" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_formapago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_FormaPago" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="Bancarizado" Type="varchar" MaxLength="255" />
+          <Property Name="Numero de operacion" Type="varchar" MaxLength="255" />
+          <Property Name="RFC del Emisor de la cuenta ordenante" Type="varchar" MaxLength="255" />
+          <Property Name="Cuenta Ordenante" Type="varchar" MaxLength="255" />
+          <Property Name="Patron para cuenta ordenante" Type="varchar" MaxLength="255" />
+          <Property Name="RFC del Emisor Cuenta de Beneficiario" Type="varchar" MaxLength="255" />
+          <Property Name="Cuenta de Benenficiario" Type="varchar" MaxLength="255" />
+          <Property Name="Patron para cuenta Beneficiaria" Type="varchar" MaxLength="255" />
+          <Property Name="Tipo Cadena Pago" Type="varchar" MaxLength="255" />
+          <Property Name="Nombre del Banco emisor de la cuenta ordenante en caso de extran" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_impuesto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_Impuesto" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="Retencion" Type="varchar" MaxLength="255" />
+          <Property Name="Traslado" Type="varchar" MaxLength="255" />
+          <Property Name="Local o federal" Type="varchar" MaxLength="255" />
+          <Property Name="Entidad en la que aplica" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_metodopago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_MetodoPago" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_moneda">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_Moneda" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="Decimales" Type="varchar" MaxLength="255" />
+          <Property Name="Porcentaje variacion" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_numpedimentoaduana">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_Aduana" Type="varchar" MaxLength="255" />
+          <Property Name="Patente" Type="varchar" MaxLength="255" />
+          <Property Name="Ejercicio" Type="varchar" MaxLength="255" />
+          <Property Name="Cantidad" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha inicio de vigencia" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha fin de vigencia" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_pais">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_Pais" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="Formato de codigo postal" Type="varchar" MaxLength="255" />
+          <Property Name="Formato de Registro de Identidad Tributaria" Type="varchar" MaxLength="255" />
+          <Property Name="Validacion del Registro de Identidad Tributaria" Type="varchar" MaxLength="255" />
+          <Property Name="Agrupaciones" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_patenteaduanal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="C_PatenteAduanal" Type="varchar" MaxLength="255" />
+          <Property Name="Inicio de vigencia" Type="varchar" MaxLength="255" />
+          <Property Name="Fin de vigencia" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_regimenfiscal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_RegimenFiscal" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="Fisica" Type="varchar" MaxLength="255" />
+          <Property Name="Moral" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha de inicio de vigencia" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha de fin de vigencia" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_tasaocuota">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RangoOFijo" Type="varchar" MaxLength="255" />
+          <Property Name="Valor minimo" Type="varchar" MaxLength="255" />
+          <Property Name="Valor maximo" Type="varchar" MaxLength="255" />
+          <Property Name="Impuesto" Type="varchar" MaxLength="255" />
+          <Property Name="Factor" Type="varchar" MaxLength="255" />
+          <Property Name="Traslado" Type="varchar" MaxLength="255" />
+          <Property Name="Retencion" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha inicio de vigencia" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha fin de vigencia" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_tipodecomprobante">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_TipoDeComprobante" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="Valor maximo" Type="varchar" MaxLength="255" />
+          <Property Name="D" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha inicio de vigencia" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha fin de vigencia" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_tipofactor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_TipoFactor" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_tiporelacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_TipoRelacion" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="f4_c_usocfdi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_UsoCFDI" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="Fisica" Type="varchar" MaxLength="255" />
+          <Property Name="Moral" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha inicio de vigencia" Type="varchar" MaxLength="255" />
+          <Property Name="Fecha fin de vigencia" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityContainer Name="satEntitiesStoreContainer">
+          <EntitySet Name="c_meses" EntityType="Self.c_meses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="c_periodicidad" EntityType="Self.c_periodicidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cexportacion" EntityType="Self.cexportacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cobjetoimpuesto" EntityType="Self.cobjetoimpuesto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_aduana" EntityType="Self.f4_c_aduana" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_caducidadfolios" EntityType="Self.f4_c_caducidadfolios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_claveprodserv" EntityType="Self.f4_c_claveprodserv" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_claveunidad" EntityType="Self.f4_c_claveunidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_codigopostal" EntityType="Self.f4_c_codigopostal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_formapago" EntityType="Self.f4_c_formapago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_impuesto" EntityType="Self.f4_c_impuesto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_metodopago" EntityType="Self.f4_c_metodopago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_moneda" EntityType="Self.f4_c_moneda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_numpedimentoaduana" EntityType="Self.f4_c_numpedimentoaduana" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_pais" EntityType="Self.f4_c_pais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_patenteaduanal" EntityType="Self.f4_c_patenteaduanal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_regimenfiscal" EntityType="Self.f4_c_regimenfiscal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_tasaocuota" EntityType="Self.f4_c_tasaocuota" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_tipodecomprobante" EntityType="Self.f4_c_tipodecomprobante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_tipofactor" EntityType="Self.f4_c_tipofactor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_tiporelacion" EntityType="Self.f4_c_tiporelacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="f4_c_usocfdi" EntityType="Self.f4_c_usocfdi" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="satEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="c_meses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clave" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="c_periodicidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clave" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cexportacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clave" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cobjetoimpuesto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clave" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_aduana">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_Aduana" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_caducidadfolios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="diasCaducidad" Type="Int32" Nullable="false" />
+          <Property Name="porcentajeCaducidad" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="f4_c_claveprodserv">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_ClaveProdServ" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Incluir_IVA_trasladado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Incluir_IEPS_trasladado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Complemento_que_debe_incluir" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicioVigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FechaFinVigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Palabras_similares" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_claveunidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_ClaveUnidad" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Nota" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fechadeiniciodevigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fechadefindevigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Simbolo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_codigopostal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_CodigoPostal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="c_Estado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="c_Municipio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="c_Localidad" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_formapago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_FormaPago" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Bancarizado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Numero_de_operacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RFC_del_Emisor_de_la_cuenta_ordenante" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Cuenta_Ordenante" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Patron_para_cuenta_ordenante" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RFC_del_Emisor_Cuenta_de_Beneficiario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Cuenta_de_Benenficiario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Patron_para_cuenta_Beneficiaria" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo_Cadena_Pago" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre_del_Banco_emisor_de_la_cuenta_ordenante_en_caso_de_extran" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_impuesto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_Impuesto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Retencion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Traslado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Local_o_federal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Entidad_en_la_que_aplica" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_metodopago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_MetodoPago" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_moneda">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_Moneda" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Decimales" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Porcentaje_variacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_numpedimentoaduana">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_Aduana" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Patente" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Ejercicio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Cantidad" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_inicio_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_fin_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_pais">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_Pais" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Formato_de_codigo_postal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Formato_de_Registro_de_Identidad_Tributaria" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Validacion_del_Registro_de_Identidad_Tributaria" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Agrupaciones" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_patenteaduanal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_PatenteAduanal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Inicio_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fin_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_regimenfiscal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_RegimenFiscal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fisica" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Moral" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_de_inicio_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_de_fin_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_tasaocuota">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RangoOFijo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Valor_minimo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Valor_maximo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Impuesto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Factor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Traslado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Retencion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_inicio_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_fin_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_tipodecomprobante">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_TipoDeComprobante" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Valor_maximo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="D" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_inicio_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_fin_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_tipofactor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_TipoFactor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_tiporelacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_TipoRelacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="f4_c_usocfdi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_UsoCFDI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fisica" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Moral" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_inicio_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_fin_de_vigencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="c_meses" EntityType="Self.c_meses" />
+          <EntitySet Name="c_periodicidad" EntityType="Self.c_periodicidad" />
+          <EntitySet Name="cexportacion" EntityType="Self.cexportacion" />
+          <EntitySet Name="cobjetoimpuesto" EntityType="Self.cobjetoimpuesto" />
+          <EntitySet Name="f4_c_aduana" EntityType="Self.f4_c_aduana" />
+          <EntitySet Name="f4_c_caducidadfolios" EntityType="Self.f4_c_caducidadfolios" />
+          <EntitySet Name="f4_c_claveprodserv" EntityType="Self.f4_c_claveprodserv" />
+          <EntitySet Name="f4_c_claveunidad" EntityType="Self.f4_c_claveunidad" />
+          <EntitySet Name="f4_c_codigopostal" EntityType="Self.f4_c_codigopostal" />
+          <EntitySet Name="f4_c_formapago" EntityType="Self.f4_c_formapago" />
+          <EntitySet Name="f4_c_impuesto" EntityType="Self.f4_c_impuesto" />
+          <EntitySet Name="f4_c_metodopago" EntityType="Self.f4_c_metodopago" />
+          <EntitySet Name="f4_c_moneda" EntityType="Self.f4_c_moneda" />
+          <EntitySet Name="f4_c_numpedimentoaduana" EntityType="Self.f4_c_numpedimentoaduana" />
+          <EntitySet Name="f4_c_pais" EntityType="Self.f4_c_pais" />
+          <EntitySet Name="f4_c_patenteaduanal" EntityType="Self.f4_c_patenteaduanal" />
+          <EntitySet Name="f4_c_regimenfiscal" EntityType="Self.f4_c_regimenfiscal" />
+          <EntitySet Name="f4_c_tasaocuota" EntityType="Self.f4_c_tasaocuota" />
+          <EntitySet Name="f4_c_tipodecomprobante" EntityType="Self.f4_c_tipodecomprobante" />
+          <EntitySet Name="f4_c_tipofactor" EntityType="Self.f4_c_tipofactor" />
+          <EntitySet Name="f4_c_tiporelacion" EntityType="Self.f4_c_tiporelacion" />
+          <EntitySet Name="f4_c_usocfdi" EntityType="Self.f4_c_usocfdi" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="satEntitiesStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="c_meses">
+            <EntityTypeMapping TypeName="satEntities.c_meses">
+              <MappingFragment StoreEntitySet="c_meses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_periodicidad">
+            <EntityTypeMapping TypeName="satEntities.c_periodicidad">
+              <MappingFragment StoreEntitySet="c_periodicidad">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cexportacion">
+            <EntityTypeMapping TypeName="satEntities.cexportacion">
+              <MappingFragment StoreEntitySet="cexportacion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cobjetoimpuesto">
+            <EntityTypeMapping TypeName="satEntities.cobjetoimpuesto">
+              <MappingFragment StoreEntitySet="cobjetoimpuesto">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_aduana">
+            <EntityTypeMapping TypeName="satEntities.f4_c_aduana">
+              <MappingFragment StoreEntitySet="f4_c_aduana">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_Aduana" ColumnName="c_Aduana" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_caducidadfolios">
+            <EntityTypeMapping TypeName="satEntities.f4_c_caducidadfolios">
+              <MappingFragment StoreEntitySet="f4_c_caducidadfolios">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="diasCaducidad" ColumnName="diasCaducidad" />
+                <ScalarProperty Name="porcentajeCaducidad" ColumnName="porcentajeCaducidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_claveprodserv">
+            <EntityTypeMapping TypeName="satEntities.f4_c_claveprodserv">
+              <MappingFragment StoreEntitySet="f4_c_claveprodserv">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_ClaveProdServ" ColumnName="c_ClaveProdServ" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Incluir_IVA_trasladado" ColumnName="Incluir IVA trasladado" />
+                <ScalarProperty Name="Incluir_IEPS_trasladado" ColumnName="Incluir IEPS trasladado" />
+                <ScalarProperty Name="Complemento_que_debe_incluir" ColumnName="Complemento que debe incluir" />
+                <ScalarProperty Name="FechaInicioVigencia" ColumnName="FechaInicioVigencia" />
+                <ScalarProperty Name="FechaFinVigencia" ColumnName="FechaFinVigencia" />
+                <ScalarProperty Name="Palabras_similares" ColumnName="Palabras similares" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_claveunidad">
+            <EntityTypeMapping TypeName="satEntities.f4_c_claveunidad">
+              <MappingFragment StoreEntitySet="f4_c_claveunidad">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_ClaveUnidad" ColumnName="c_ClaveUnidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nota" ColumnName="Nota" />
+                <ScalarProperty Name="Fechadeiniciodevigencia" ColumnName="Fechadeiniciodevigencia" />
+                <ScalarProperty Name="Fechadefindevigencia" ColumnName="Fechadefindevigencia" />
+                <ScalarProperty Name="Simbolo" ColumnName="Simbolo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_codigopostal">
+            <EntityTypeMapping TypeName="satEntities.f4_c_codigopostal">
+              <MappingFragment StoreEntitySet="f4_c_codigopostal">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_CodigoPostal" ColumnName="c_CodigoPostal" />
+                <ScalarProperty Name="c_Estado" ColumnName="c_Estado" />
+                <ScalarProperty Name="c_Municipio" ColumnName="c_Municipio" />
+                <ScalarProperty Name="c_Localidad" ColumnName="c_Localidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_formapago">
+            <EntityTypeMapping TypeName="satEntities.f4_c_formapago">
+              <MappingFragment StoreEntitySet="f4_c_formapago">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_FormaPago" ColumnName="c_FormaPago" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Bancarizado" ColumnName="Bancarizado" />
+                <ScalarProperty Name="Numero_de_operacion" ColumnName="Numero de operacion" />
+                <ScalarProperty Name="RFC_del_Emisor_de_la_cuenta_ordenante" ColumnName="RFC del Emisor de la cuenta ordenante" />
+                <ScalarProperty Name="Cuenta_Ordenante" ColumnName="Cuenta Ordenante" />
+                <ScalarProperty Name="Patron_para_cuenta_ordenante" ColumnName="Patron para cuenta ordenante" />
+                <ScalarProperty Name="RFC_del_Emisor_Cuenta_de_Beneficiario" ColumnName="RFC del Emisor Cuenta de Beneficiario" />
+                <ScalarProperty Name="Cuenta_de_Benenficiario" ColumnName="Cuenta de Benenficiario" />
+                <ScalarProperty Name="Patron_para_cuenta_Beneficiaria" ColumnName="Patron para cuenta Beneficiaria" />
+                <ScalarProperty Name="Tipo_Cadena_Pago" ColumnName="Tipo Cadena Pago" />
+                <ScalarProperty Name="Nombre_del_Banco_emisor_de_la_cuenta_ordenante_en_caso_de_extran" ColumnName="Nombre del Banco emisor de la cuenta ordenante en caso de extran" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_impuesto">
+            <EntityTypeMapping TypeName="satEntities.f4_c_impuesto">
+              <MappingFragment StoreEntitySet="f4_c_impuesto">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_Impuesto" ColumnName="c_Impuesto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Retencion" ColumnName="Retencion" />
+                <ScalarProperty Name="Traslado" ColumnName="Traslado" />
+                <ScalarProperty Name="Local_o_federal" ColumnName="Local o federal" />
+                <ScalarProperty Name="Entidad_en_la_que_aplica" ColumnName="Entidad en la que aplica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_metodopago">
+            <EntityTypeMapping TypeName="satEntities.f4_c_metodopago">
+              <MappingFragment StoreEntitySet="f4_c_metodopago">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_MetodoPago" ColumnName="c_MetodoPago" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_moneda">
+            <EntityTypeMapping TypeName="satEntities.f4_c_moneda">
+              <MappingFragment StoreEntitySet="f4_c_moneda">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_Moneda" ColumnName="c_Moneda" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Decimales" ColumnName="Decimales" />
+                <ScalarProperty Name="Porcentaje_variacion" ColumnName="Porcentaje variacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_numpedimentoaduana">
+            <EntityTypeMapping TypeName="satEntities.f4_c_numpedimentoaduana">
+              <MappingFragment StoreEntitySet="f4_c_numpedimentoaduana">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_Aduana" ColumnName="c_Aduana" />
+                <ScalarProperty Name="Patente" ColumnName="Patente" />
+                <ScalarProperty Name="Ejercicio" ColumnName="Ejercicio" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Fecha_inicio_de_vigencia" ColumnName="Fecha inicio de vigencia" />
+                <ScalarProperty Name="Fecha_fin_de_vigencia" ColumnName="Fecha fin de vigencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_pais">
+            <EntityTypeMapping TypeName="satEntities.f4_c_pais">
+              <MappingFragment StoreEntitySet="f4_c_pais">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_Pais" ColumnName="c_Pais" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Formato_de_codigo_postal" ColumnName="Formato de codigo postal" />
+                <ScalarProperty Name="Formato_de_Registro_de_Identidad_Tributaria" ColumnName="Formato de Registro de Identidad Tributaria" />
+                <ScalarProperty Name="Validacion_del_Registro_de_Identidad_Tributaria" ColumnName="Validacion del Registro de Identidad Tributaria" />
+                <ScalarProperty Name="Agrupaciones" ColumnName="Agrupaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_patenteaduanal">
+            <EntityTypeMapping TypeName="satEntities.f4_c_patenteaduanal">
+              <MappingFragment StoreEntitySet="f4_c_patenteaduanal">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="C_PatenteAduanal" ColumnName="C_PatenteAduanal" />
+                <ScalarProperty Name="Inicio_de_vigencia" ColumnName="Inicio de vigencia" />
+                <ScalarProperty Name="Fin_de_vigencia" ColumnName="Fin de vigencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_regimenfiscal">
+            <EntityTypeMapping TypeName="satEntities.f4_c_regimenfiscal">
+              <MappingFragment StoreEntitySet="f4_c_regimenfiscal">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_RegimenFiscal" ColumnName="c_RegimenFiscal" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Fisica" ColumnName="Fisica" />
+                <ScalarProperty Name="Moral" ColumnName="Moral" />
+                <ScalarProperty Name="Fecha_de_inicio_de_vigencia" ColumnName="Fecha de inicio de vigencia" />
+                <ScalarProperty Name="Fecha_de_fin_de_vigencia" ColumnName="Fecha de fin de vigencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_tasaocuota">
+            <EntityTypeMapping TypeName="satEntities.f4_c_tasaocuota">
+              <MappingFragment StoreEntitySet="f4_c_tasaocuota">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="RangoOFijo" ColumnName="RangoOFijo" />
+                <ScalarProperty Name="Valor_minimo" ColumnName="Valor minimo" />
+                <ScalarProperty Name="Valor_maximo" ColumnName="Valor maximo" />
+                <ScalarProperty Name="Impuesto" ColumnName="Impuesto" />
+                <ScalarProperty Name="Factor" ColumnName="Factor" />
+                <ScalarProperty Name="Traslado" ColumnName="Traslado" />
+                <ScalarProperty Name="Retencion" ColumnName="Retencion" />
+                <ScalarProperty Name="Fecha_inicio_de_vigencia" ColumnName="Fecha inicio de vigencia" />
+                <ScalarProperty Name="Fecha_fin_de_vigencia" ColumnName="Fecha fin de vigencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_tipodecomprobante">
+            <EntityTypeMapping TypeName="satEntities.f4_c_tipodecomprobante">
+              <MappingFragment StoreEntitySet="f4_c_tipodecomprobante">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_TipoDeComprobante" ColumnName="c_TipoDeComprobante" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Valor_maximo" ColumnName="Valor maximo" />
+                <ScalarProperty Name="D" ColumnName="D" />
+                <ScalarProperty Name="Fecha_inicio_de_vigencia" ColumnName="Fecha inicio de vigencia" />
+                <ScalarProperty Name="Fecha_fin_de_vigencia" ColumnName="Fecha fin de vigencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_tipofactor">
+            <EntityTypeMapping TypeName="satEntities.f4_c_tipofactor">
+              <MappingFragment StoreEntitySet="f4_c_tipofactor">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_TipoFactor" ColumnName="c_TipoFactor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_tiporelacion">
+            <EntityTypeMapping TypeName="satEntities.f4_c_tiporelacion">
+              <MappingFragment StoreEntitySet="f4_c_tiporelacion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_TipoRelacion" ColumnName="c_TipoRelacion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="f4_c_usocfdi">
+            <EntityTypeMapping TypeName="satEntities.f4_c_usocfdi">
+              <MappingFragment StoreEntitySet="f4_c_usocfdi">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_UsoCFDI" ColumnName="c_UsoCFDI" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Fisica" ColumnName="Fisica" />
+                <ScalarProperty Name="Moral" ColumnName="Moral" />
+                <ScalarProperty Name="Fecha_inicio_de_vigencia" ColumnName="Fecha inicio de vigencia" />
+                <ScalarProperty Name="Fecha_fin_de_vigencia" ColumnName="Fecha fin de vigencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

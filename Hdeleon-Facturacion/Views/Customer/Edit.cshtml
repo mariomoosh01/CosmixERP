@@ -1,0 +1,122 @@
+﻿@model Hdeleon_Facturacion.Models.ViewModels.CustomerViewModel
+@{
+    ViewBag.Title = "Editar cliente";
+    IEnumerable<SelectListItem> slcEstados = (IEnumerable<SelectListItem>)ViewBag.slcEstados;
+    IEnumerable<SelectListItem> slcMunicipios = (IEnumerable<SelectListItem>)ViewBag.slcMunicipios;
+    IEnumerable<SelectListItem> slcCodeTaxRegime = (IEnumerable<SelectListItem>)ViewBag.slcCodeTaxRegime;
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12 text-danger">
+        @ViewBag.Error
+    </div>
+</div>
+
+@using (Html.BeginForm("Edit", "Customer", FormMethod.Post, new { id = "frm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Name)
+                @Html.TextBoxFor(d => d.Name, new { @class = "form-control", maxlength = "200" })
+                @Html.ValidationMessageFor(d => d.Name, "", new { @class = "text-danger", @id = "Name" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.CommercialName)
+                @Html.TextBoxFor(d => d.CommercialName, new { @class = "form-control", maxlength = "100" })
+                @Html.ValidationMessageFor(d => d.CommercialName, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                *@Html.LabelFor(d => d.RFC)
+                @Html.TextBoxFor(d => d.RFC, new { @class = "form-control", maxlength = "13" })
+                @Html.ValidationMessageFor(d => d.RFC, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(d => d.Street)
+                @Html.TextBoxFor(d => d.Street, new { @class = "form-control", maxlength = "500" })
+                @Html.ValidationMessageFor(d => d.Street, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.NoExt)
+                @Html.TextBoxFor(d => d.NoExt, new { @class = "form-control", maxlength = "10" })
+                @Html.ValidationMessageFor(d => d.NoExt, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.NoInt)
+                @Html.TextBoxFor(d => d.NoInt, new { @class = "form-control", maxlength = "10" })
+                @Html.ValidationMessageFor(d => d.NoInt, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.CP)
+                @Html.TextBoxFor(d => d.CP, new { @class = "form-control", maxlength = "5" })
+                @Html.ValidationMessageFor(d => d.CP, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.idEstado)
+                @Html.DropDownListFor(d => d.idEstado, slcEstados, new { @class = "form-control", id = "iddEstado" })
+                @Html.ValidationMessageFor(d => d.idEstado, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                *@Html.LabelFor(d => d.IdMunicipio)
+                @Html.DropDownListFor(d => d.IdMunicipio, slcMunicipios, new { @class = "form-control", id = "IdMunicipio" })
+                @Html.ValidationMessageFor(d => d.IdMunicipio, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                *@Html.LabelFor(d => d.CodeTaxRegime)
+                @Html.DropDownListFor(d => d.CodeTaxRegime, slcCodeTaxRegime, new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.CodeTaxRegime, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Email)
+                @Html.TextBoxFor(d => d.Email, new { @class = "form-control", maxlength = "100" })
+                @Html.ValidationMessageFor(d => d.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group dt-right">
+                <div class="col-md-12" style="text-align:right;">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section scripts{
+
+    <script>
+
+$(document).ready(function () {
+    $("#Name").focus();
+
+    $("#iddEstado").change(function () {
+        let IdEstado = $("#iddEstado").val();
+
+        $.get("@Url.Content("~/Json/Municipios")", "IdEstado=" + IdEstado, function (data) {
+            console.log(data);
+            $("#IdMunicipio option").remove()
+            data.forEach(function (element) {
+                $("#IdMunicipio").append('<option value="'+element.Id+'">'+element.Value+'</option>');
+            });
+        })
+
+    })
+
+    
+    
+});
+
+
+    </script>
+
+}

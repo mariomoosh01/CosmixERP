@@ -1,0 +1,528 @@
+﻿@model Hdeleon_Facturacion.Models.ViewModels.InvoiceViewModel
+@{
+    ViewBag.Title = "Nueva Factura";
+    SelectList lstFormaPago = (SelectList)ViewBag.lstFormaPago;
+    SelectList lstMetodoPago = (SelectList)ViewBag.lstMetodoPago;
+    SelectList lstUsoCFDI = (SelectList)ViewBag.lstUsoCfdi;
+    SelectList lstMoneda = (SelectList)ViewBag.lstMoneda;
+    SelectList lstRegimenFiscal = (SelectList)ViewBag.lstRegimenFiscal;
+    IEnumerable<SelectListItem> slcEstados = (IEnumerable<SelectListItem>)ViewBag.slcEstados;
+    IEnumerable<Hdeleon_Facturacion.Models.ViewModels.TaxViewModel> lstTax= (IEnumerable<Hdeleon_Facturacion.Models.ViewModels.TaxViewModel>)ViewBag.lstTax;
+    SelectList lstExportacion = (SelectList)ViewBag.lstExportacion;
+    SelectList lstObjetoImp = (SelectList)ViewBag.lstObjetoImp;
+    SelectList lstCodeTaxRegime = (SelectList)ViewBag.lstCodeTaxRegime;
+    SelectList lstPeriodicidad = (SelectList)ViewBag.lstPeriodicidad;
+    SelectList lstMeses = (SelectList)ViewBag.lstMeses;
+    SelectList lstAnos = (SelectList)ViewBag.lstAnos;
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<form id="frmFactura" autocomplete="off" action="@Url.Content("~/Invoice/Save")" method="post">
+    <div style="font-size:12px;" class="text-danger">
+        @Html.ValidationSummary()
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#general">Datos Generales</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#conceptos">Conceptos</a>
+        </li>
+
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active container" id="general">
+            <br />
+            <div class="row">
+
+
+                <div class="col-md-4">
+                    *@Html.LabelFor(d => d.sSerie)
+                    @Html.TextBoxFor(d => d.sSerie, "", new { @class = "form-control form-control-sm", maxlength = "20" })
+                    *@Html.LabelFor(d => d.Folio)
+                    @Html.TextBoxFor(d => d.Folio, "", new { @class = "form-control form-control-sm", maxlength = "20" })
+
+
+                </div>
+                <div class="col-md-4">
+                    *@Html.LabelFor(d => d.FormaPago)
+                    @Html.DropDownListFor(d => d.FormaPago, lstFormaPago, new { @class = "form-control form-control-sm" })
+
+                    *@Html.LabelFor(d => d.TipoDePago)
+                    @Html.DropDownListFor(d => d.TipoDePago, lstMetodoPago, new { @class = "form-control form-control-sm" })
+
+                    *@Html.LabelFor(d => d.Exportacion)
+                    @Html.DropDownListFor(d => d.Exportacion, lstExportacion, new { @class = "form-control form-control-sm" })
+
+                </div>
+                <div class="col-md-4">
+                    *@Html.LabelFor(d => d.Moneda)
+                    @Html.DropDownListFor(d => d.Moneda, lstMoneda, new { @class = "form-control form-control-sm" })
+                    *@Html.LabelFor(d => d.UsoCFDI)
+                    @Html.DropDownListFor(d => d.UsoCFDI, lstUsoCFDI, new { @class = "form-control form-control-sm" })
+                    *@Html.LabelFor(d => d.Fecha)
+                    @Html.TextBoxFor(d => d.Fecha, "", new { @class = "form-control form-control-sm" })
+
+
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-12">
+                    @Html.LabelFor(d => d.hasInformacionGlobal)
+                    @Html.CheckBoxFor(d => d.hasInformacionGlobal, new { })
+                </div>
+
+
+            </div>
+            <div id="divInformacionGlobal" style="display:none;">
+                <div class="row">
+
+                    <div class="col-4">
+                        @Html.LabelFor(d => d.Periodicidad)
+                        @Html.DropDownListFor(d => d.Periodicidad, lstPeriodicidad, new { @class = "form-control form-control-sm" })
+
+                    </div>
+                    <div class="col-4">
+                        @Html.LabelFor(d => d.Meses)
+                        @Html.DropDownListFor(d => d.Meses, lstMeses, new { @class = "form-control form-control-sm" })
+
+                    </div>
+                    <div class="col-3">
+                        @Html.LabelFor(d => d.Ano)
+                        @Html.DropDownListFor(d => d.Ano, lstAnos, new { @class = "form-control form-control-sm" })
+
+                    </div>
+
+                </div>
+            </div>
+           
+
+            <hr />
+            <h5>Datos del cliente</h5>
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Buscador de cliente</b>
+                    @Html.TextBox("bCustomer", "", new { @class = "form-control form-control-sm", id = "bCustomer", placeholder = "Escribe para comenzar a buscar" })
+
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4">
+                    *@Html.LabelFor(d => d.RFCCliente)
+                    @Html.TextBoxFor(d => d.RFCCliente, "", new { @class = "form-control form-control-sm" })
+                    @Html.LabelFor(d => d.Calle)
+                    @Html.TextBoxFor(d => d.Calle, "", new { @class = "form-control form-control-sm" })
+                    @Html.LabelFor(d => d.Estado)
+                    @Html.DropDownListFor(d => d.Estado, slcEstados, new { @class = "form-control", id = "Estado" })
+                </div>
+                <div class="col-md-4">
+                    *@Html.LabelFor(d => d.RazonSocial)
+                    @Html.TextBoxFor(d => d.RazonSocial, "", new { @class = "form-control form-control-sm", autocomplete = "off", @readonly = "true", id = "RazonSocial" })
+                    @Html.LabelFor(d => d.NoExterior)
+                    @Html.TextBoxFor(d => d.NoExterior, "", new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.LabelFor(d => d.Municipio)
+                    <select class="form-control" id="Municipio" name="Municipio"></select>
+
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(d => d.CP)
+                    @Html.TextBoxFor(d => d.CP, "", new { @class = "form-control form-control-sm", type = "number", max = "99999" })
+                    @Html.LabelFor(d => d.NoInterior)
+                    @Html.TextBoxFor(d => d.NoInterior, "", new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.LabelFor(d => d.RegimenFiscalCliente)
+                    @Html.DropDownListFor(d => d.RegimenFiscalCliente, lstCodeTaxRegime, new { @class = "form-control", id = "RegimenFiscalCliente" })
+
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane container" id="conceptos">
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Buscador de producto</b>
+                    @Html.TextBox("bProduct", "", new { @class = "form-control form-control-sm", id = "bProduct", placeholder = "Escribe para comenzar a buscar" })
+
+                </div>
+            </div>
+           
+            <div class="row">
+                <div class="col-md-4">
+                    <label>*Cantidad</label>
+                    @Html.TextBox("cantidad", "", new { @class = "form-control form-control-sm", type="number" })
+
+                </div>
+                <div class="col-md-4">
+                    <label>*Descripción</label>
+                    @Html.TextBox("descripcion", "", new { @class = "form-control form-control-sm" })
+
+                </div>
+                <div class="col-md-4">
+                    <label>Descuento</label>
+                    @Html.TextBox("descuento", "", new { @class = "form-control form-control-sm", type="number" })
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>*Precio</label>
+                    @Html.TextBox("precioUnitario", "", new { @class = "form-control form-control-sm", type="number" })
+
+                </div>
+                <div class="col-md-4">
+                    <label>*Clave producto/servicio</label>
+                    @Html.TextBox("claveProducto", "", new { @class = "form-control form-control-sm", id = "claveProducto", placeholder = "Escribe para comenzar a buscar" })
+                    <span style="font-size:11px; font-weight:bold;" id="spanClaveProdServ">&nbsp;</span>
+
+                </div>
+                <div class="col-md-4">
+                    <label>*Clave unidad</label>
+                    @Html.TextBox("claveUnidad", "", new { @class = "form-control form-control-sm", id = "claveUnidad", placeholder = "Escribe para comenzar a buscar" })
+                    <span style="font-size:11px; font-weight:bold;" id="spanClaveUnidad"></span>
+
+                </div>
+                
+
+            </div>
+            <div class="row">
+                <div class="col-md-4 offset-8">
+                    <label>*Objeto de Impuesto</label>
+                    @Html.DropDownList("objetoImp", lstObjetoImp, new { @class = "form-control form-control-sm", id="objetoImp" })
+
+                </div>
+            </div>
+            <div style="display:none;" class="row" id="divSlcImpuestos">
+                <div class="col-md-12" style="text-align:right;">
+                    <h5>Impuestos</h5>
+                    @{ 
+                        int i = 0;
+                    }
+                    @foreach (var oTax in lstTax)
+                    {
+                        <input class="taxes" id="tax-@i" name="Taxes[]" type="checkbox" value="@oTax.Id" />
+                        <label style="font-weight:normal;" for="tax-@i"><b>@oTax.Name</b> (@oTax.Type @oTax.Tasa @oTax.Factor)</label><br />
+                       
+                        i++;
+                    }
+
+                
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="text-align:right;">
+                    <br />
+                    <input onclick="jsAddConcepto();" type="button" value="+ Agregar concepto" class="btn btn-success" />
+                </div>
+
+            </div>
+            <div class="row" id="divConceptos">
+                
+
+            </div>
+        </div>
+
+    </div>
+
+    <div style="background:#777777; height:1px; margin-top:15px;"></div>
+    <div class="row" >
+    
+        <div style="text-align:right;" class="col-md-4 offset-md-8">
+            <b style="font-size: 16px;">Subtotal $<span id="sSubtotal">0.00</span></b><br />
+            <b style="font-size: 16px;">Descuento $<span id="sDescuento">0.00</span></b><br />
+            <b style="font-size: 14px;">Retenciones $<span id="sRetenciones">0.00</span></b><br />
+            <b style="font-size: 14px;">Traslados $<span id="sTraslados">0.00</span></b><br />
+            <b style="font-size: 25px;">Total $<span id="sTotal">0.00</span></b>
+            <br /><br />
+            <input type="submit" value="Timbrar Factura" class="btn btn-primary btn-lg" />
+
+        </div>
+    </div>
+
+</form>
+
+@section scripts{
+
+<script>
+    var numConcepto = 0;
+        $(document).ready(function () {
+
+            //parche chrome eliminar autocomplete
+            setTimeout(function () {
+                $('#RazonSocial').prop('readonly', false);
+            }, 200);
+
+            $("#claveProducto").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Content("~/Json/ProductosServicios")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { cad: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Value, value: item.Id };
+                            }))
+                        },
+                       
+                    })
+                },
+                select: function (event, ui) {
+
+                    if (ui != null && ui.item != null) {
+                        document.getElementById("spanClaveProdServ").innerHTML = ui.item.label;
+                    } else {
+                        document.getElementById("spanClaveProdServ").innerHTML = "";
+                    }
+                }
+            });
+
+             $("#claveUnidad").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Content("~/Json/ClaveUnidad")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { cad: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Value, value: item.Id };
+                            }))
+                        }
+                    })
+                },
+                 select: function (event, ui) {
+                     if (ui != null && ui.item != null) {
+                         document.getElementById("spanClaveUnidad").innerHTML = ui.item.label;
+                     } else {
+                         document.getElementById("spanClaveUnidad").innerHTML = "";
+                     }
+                 }
+             })
+
+            $("#bCustomer").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Content("~/Json/Customer")",
+                        type: "GET",
+                        dataType: "json",
+                        data: { cad: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Value, value: item.Id };
+                            }))
+                        }
+                    })
+                },
+                 select: function (event, ui) {
+                     if (ui != null && ui.item != null) {
+                         
+                         console.log(ui.item.value);
+                         document.getElementById("RFCCliente").value = ui.item.value.RFC;
+                         document.getElementById("RazonSocial").value = ui.item.value.Name;
+                         document.getElementById("CP").value = ui.item.value.CP;
+                         document.getElementById("Calle").value = ui.item.value.Street;
+                         document.getElementById("NoExterior").value = ui.item.value.NoExt;
+                         document.getElementById("NoInterior").value = ui.item.value.NoInt;
+                         document.getElementById("RazonSocial").value = ui.item.value.Name;
+                         document.getElementById("Estado").value = ui.item.value.idEstado;
+                         document.getElementById("RegimenFiscalCliente").value = ui.item.value.CodeTaxRegime;
+                         jsGetMunicipios(function () { //se ejecuta como callback
+                             document.getElementById("Municipio").value = ui.item.value.IdMunicipio;
+                         })
+  
+                     }
+                     setTimeout(function () {
+                         document.getElementById("bCustomer").value = "";
+                     },1000);
+                 },
+                 change: function (event, ui) {
+                     document.getElementById("bCustomer").value = "";
+                 }
+            })
+
+             $("#bProduct").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Content("~/Json/Product")",
+                        type: "GET",
+                        dataType: "json",
+                        data: { cad: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Value, value: item.Id };
+                            }))
+                        }
+                    })
+                },
+                 select: function (event, ui) {
+                     if (ui != null && ui.item != null) {
+                         
+                         console.log(ui.item.value);
+                         document.getElementById("descripcion").value = ui.item.value.Descripcion;
+                         document.getElementById("precioUnitario").value = ui.item.value.Precio;
+                         document.getElementById("claveProducto").value = ui.item.value.ClaveProdServ;
+                         document.getElementById("claveUnidad").value = ui.item.value.ClaveUnidad;
+                         document.getElementById("cantidad").focus();
+  
+                     }
+                     setTimeout(function () {
+                         document.getElementById("bProduct").value = "";
+                     },1000);
+                 },
+                 change: function (event, ui) {
+                     document.getElementById("bProduct").value = "";
+                 }
+            })
+
+             $("#frmFactura").submit(function (e) {
+                 e.preventDefault();
+                 jsShowWindowLoad("Realizando la factura");
+                 let parametros = $(this).serialize();
+                 let url = $(this).prop("action");
+                 
+                 $.post(url, parametros, function (data) {
+                     jsRemoveWindowLoad();
+                     if (data.includes("Error"))
+                         MessageError(data);
+                     else //si es exitoso data tiene el id de la factura
+                     {
+                         MessageSuccessful("Factura realizada con éxito");
+                         setTimeout(function () {
+                             document.location.href = "@Url.Content("~/Invoice/Show/")" + "?Id=" + data;
+                         },2000)
+                     }
+                 })
+             })
+
+            //bloquear enter en campos
+             $("input[type=text]").keydown(function (event) {
+                 if (event.keyCode == 13) {
+                     event.preventDefault();
+                     return false;
+                 }
+             });
+
+
+             $("#Estado").change(function () {
+                 jsGetMunicipios();
+
+             })
+            //llenamos municipios por primer vez
+            $("#Estado").change();
+
+            //funcionalidad impuestos
+            document.getElementById("objetoImp").addEventListener("change", (event) => {
+                if (event.target.value === "01") {
+                    document.getElementById("divSlcImpuestos").style.display = "none";
+                    document.querySelectorAll(".taxes").forEach(e => e.checked = false)
+                }
+                else {
+                    document.getElementById("divSlcImpuestos").style.display = "block";
+                }
+            });
+
+            // div Información global
+            document.getElementById("hasInformacionGlobal").addEventListener("change", (event) => {
+                document.getElementById("divInformacionGlobal").style.display =
+                    event.target.checked ? "block" : "none";
+            })
+        })
+
+
+        function jsAddConcepto() {
+            //validación
+            if (document.getElementById("cantidad").value == "" ||
+               document.getElementById("descripcion").value=="" ||
+                document.getElementById("precioUnitario").value=="" ||
+                document.getElementById("claveProducto").value=="" ||
+                document.getElementById("claveUnidad").value == "") {
+                MessageError("La cantidad, descripción, precio unitario, clave producto y clave unidad son obligatorias");
+                return;
+            }
+
+            var parametros = $("#conceptos :input").serialize() + "&numConcepto=" + numConcepto;
+            var url="@Url.Content("~/Invoice/AddConcepto")"
+         
+            $.post(url, parametros, function (data) {
+
+                $("#divConceptos").append(data);
+
+                //borramos valores
+                document.getElementById("cantidad").value = "";
+                document.getElementById("descripcion").value = "";
+                document.getElementById("precioUnitario").value = "";
+                document.getElementById("claveProducto").value = "";
+                document.getElementById("claveUnidad").value = "";
+                document.getElementById("descuento").value = "";
+                document.getElementById("spanClaveUnidad").innerHTML = "";
+                document.getElementById("spanClaveProdServ").innerHTML = "";
+
+                //calculamos
+                jsCalculateTotal();
+
+            })
+
+            numConcepto++;
+
+            
+        }
+    function jsGetMunicipios(fnCallBack) {
+        let IdEstado = $("#Estado").val();
+
+        $.get("@Url.Content("~/Json/Municipios")", "IdEstado=" + IdEstado, function (data) {
+            $("#Municipio option").remove()
+            data.forEach(function (element) {
+                $("#Municipio").append('<option value="'+element.Id+'">'+element.Value+'</option>');
+            });
+
+            if (fnCallBack !== undefined)
+                fnCallBack();
+        })
+    }
+    function jsCalculateTotal() {
+        let descuento = 0;
+        let subtotal = 0;
+        let total = 0;
+        let totalImpuestosRetenidos = 0;
+        let TotalImpuestosTrasladados = 0;
+
+        $(".descuento").each(function () {
+            if ($(this).prop("value") > 0 && $(this).prop("value")!="")
+            descuento += parseFloat($(this).prop("value"));
+        })
+        $(".importe").each(function () {
+            subtotal += parseFloat($(this).prop("value"));
+        })
+        $(".imp").each(function () {
+            let importeConcepto = $(this).find(".importeconcepto").prop("value");
+            let tasa = $(this).find(".tasa").prop("value");
+            let tipo = $(this).find(".tipo").prop("value");
+            console.log(tasa);
+            console.log(tipo);
+            console.log(importeConcepto);
+            let importeImpuesto = parseFloat(tasa) * parseFloat(importeConcepto);
+            if (tipo == "Traslado")
+                TotalImpuestosTrasladados += parseFloat(importeImpuesto);
+            else if (tipo == "Retención")
+                totalImpuestosRetenidos += parseFloat(importeImpuesto);
+        })
+
+        //calculamos el total
+        total = parseFloat(subtotal) - parseFloat(descuento);
+        total = parseFloat(total) - parseFloat(totalImpuestosRetenidos) + parseFloat(TotalImpuestosTrasladados); //impuestos
+       // console.log(total);
+        $("#sSubtotal").html(subtotal.toFixed(2));
+        $("#sDescuento").html(descuento.toFixed(2));
+        $("#sRetenciones").html(totalImpuestosRetenidos.toFixed(2));
+        $("#sTraslados").html(TotalImpuestosTrasladados.toFixed(2));
+        $("#sTotal").html(total.toFixed(2));
+        
+    }
+</script>
+   
+}

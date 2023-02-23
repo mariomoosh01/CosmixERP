@@ -1,0 +1,120 @@
+﻿@model Hdeleon_Facturacion.Models.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Editar producto";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+    <div class="row">
+        <div class="col-md-12 text-danger">
+            @ViewBag.Error
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { id = "frm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(d=>d.Id)
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="form-group">
+                    *@Html.LabelFor(d => d.ClaveProdServ)
+                    @Html.TextBoxFor(d => d.ClaveProdServ, new { @class = "form-control", id = "ClaveProdServ" })
+                    <span style="font-size:11px; font-weight:bold;" id="spanClaveProdServ">@ViewBag.ClaveProdServ</span>
+                    @Html.ValidationMessageFor(d => d.ClaveProdServ, "", new { @class = "text-danger", placeholder="Escribe para comenzar a buscar" })
+                </div>
+                <div class="form-group">
+                    *@Html.LabelFor(d => d.Descripcion)
+                    @Html.TextBoxFor(d => d.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Descripcion, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    *@Html.LabelFor(d => d.ClaveUnidad)
+                    @Html.TextBoxFor(d => d.ClaveUnidad, new { @class = "form-control", id = "ClaveUnidad", placeholder = "Escribe para comenzar a buscar" })
+                    <span style="font-size:11px; font-weight:bold;" id="spanClaveUnidad">@ViewBag.ClaveUnidad</span>
+                    @Html.ValidationMessageFor(d => d.ClaveUnidad, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    *@Html.LabelFor(d => d.Precio)
+                    @Html.TextBoxFor(d => d.Precio, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Precio, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.LabelFor(d => d.NoIdentificacion)
+                    @Html.TextBoxFor(d => d.NoIdentificacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.NoIdentificacion, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Unidad)
+                    @Html.TextBoxFor(d => d.Unidad, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Unidad, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group dt-right">
+                    <div class="col-md-12" style="text-align:right;">
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+@section scripts{
+
+    <script>
+
+$(document).ready(function () {
+
+        $("#ClaveProdServ").autocomplete({
+            source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Content("~/Json/ProductosServicios")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { cad: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Value, value: item.Id };
+                            }))
+                        }
+                    })
+                },
+            select: function (event, ui) {
+                if (ui != null && ui.item != null) {
+                    document.getElementById("spanClaveProdServ").innerHTML = ui.item.label;
+                }
+            }
+        });
+
+        $("#ClaveUnidad").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "@Url.Content("~/Json/ClaveUnidad")",
+                    type: "POST",
+                    dataType: "json",
+                    data: { cad: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Value, value: item.Id };
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                if (ui != null && ui.item != null) {
+                    document.getElementById("spanClaveUnidad").innerHTML = ui.item.label;
+                }
+            }
+        })
+
+        document.getElementById("ClaveProdServ").focus();
+
+});
+
+
+    </script>
+
+}

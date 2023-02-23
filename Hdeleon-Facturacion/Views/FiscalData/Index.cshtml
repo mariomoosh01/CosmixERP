@@ -1,0 +1,86 @@
+﻿@model Hdeleon_Facturacion.Models.ViewModels.FiscalDataViewModel
+@{
+    ViewBag.Title = "Datos fiscales";
+    IEnumerable<SelectListItem> slcTaxRegime = (IEnumerable<SelectListItem>)ViewBag.slcTaxRegime;
+
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12 text-danger">
+        @ViewBag.Error
+    </div>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+
+@using (Html.BeginForm("Save", "FiscalData", FormMethod.Post, new { id = "frm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            
+            <div class="form-group">
+                *@Html.LabelFor(d => d.RFC)
+                @Html.TextBoxFor(d => d.RFC, new { @class = "form-control", maxlength = "13" })
+                @Html.ValidationMessageFor(d => d.RFC, "", new { @class = "text-danger"})
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.FiscalName)
+                @Html.TextBoxFor(d => d.FiscalName, new { @class = "form-control", maxlength = "200" })
+                @Html.ValidationMessageFor(d => d.FiscalName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Email)
+                @Html.TextBoxFor(d => d.Email, new { @class = "form-control", maxlength = "100" })
+                @Html.ValidationMessageFor(d => d.Email, "", new { @class = "text-danger"})
+            </div>
+            <div>
+                *@Html.LabelFor(d => d.CodeTaxRegime)
+                @Html.DropDownListFor(d => d.CodeTaxRegime, slcTaxRegime, new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.CodeTaxRegime, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.UserPacFC)
+                @Html.TextBoxFor(d => d.UserPacFC, new { @class = "form-control", maxlength = "255" })
+                @Html.ValidationMessageFor(d => d.UserPacFC, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.PassPacFC)
+                @Html.TextBoxFor(d => d.PassPacFC, new { @class = "form-control", maxlength = "255" })
+                @Html.ValidationMessageFor(d => d.PassPacFC, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.CP)
+                @Html.TextBoxFor(d => d.CP, new { @class = "form-control", maxlength = "6" })
+                @Html.ValidationMessageFor(d => d.CP, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="form-group dt-right">
+                <div class="col-md-12" style="text-align:right;">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section scripts{
+
+
+
+}

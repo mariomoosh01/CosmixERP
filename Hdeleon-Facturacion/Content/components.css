@@ -1,0 +1,47 @@
+﻿
+/*WindowLoad--------------------------------------*/
+#WindowLoad
+{
+    position:fixed;
+    top:0px;
+    left:0px;
+    z-index:32000;
+    filter:alpha(opacity=75);   
+   -moz-opacity:75;   
+    opacity:0.75;
+    background:#fff;
+}
+
+.Error{
+    position:fixed;
+    z-index:32000;
+    top:20%;
+    left:40% !important;
+    padding:5px;
+    width:35%;
+    text-align:center;
+    border: #ff4b64 2px solid;
+    background:#F8F8F8;
+    color:#ff4b64;
+    font-weight:bold;
+    opacity:0;
+    font-size:1.2em;
+    border-radius: 7px;
+}
+
+.Exito{
+    position:fixed;
+    z-index:32000;
+    top:20%;
+    left:40%;
+    padding:5px;
+    width:40%;
+    text-align:center;
+    border: #64b567 2px solid;
+    background:#Fff;
+    color:#64b567;
+    font-size:1.2em;
+    font-weight:bold;
+    opacity:0;
+    border-radius: 7px;
+}

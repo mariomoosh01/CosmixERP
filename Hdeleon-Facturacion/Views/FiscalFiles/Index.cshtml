@@ -1,0 +1,58 @@
+﻿@model Hdeleon_Facturacion.Models.ViewModels.FiscalFilesViewModel
+@{
+    ViewBag.Title = "Archivos fiscales";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12 text-danger">
+        @ViewBag.Error
+    </div>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+
+
+@using (Html.BeginForm("Save", "FiscalFiles", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="form-group">
+                *@Html.LabelFor(d => d.PrivateCode)
+                @Html.PasswordFor(d => d.PrivateCode, new { @class = "form-control", autocomplete="Off" })
+                @Html.ValidationMessageFor(d => d.PrivateCode, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Cer)
+                @Html.TextBoxFor(d => d.Cer, new { @class = "form-control",type = "file",accept=".cer" })
+                @Html.ValidationMessageFor(d => d.Cer, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Key)
+                @Html.TextBoxFor(d => d.Key, new { @class = "form-control", type = "file", accept = ".key" })
+                @Html.ValidationMessageFor(d => d.Key, "", new { @class = "text-danger" })
+            </div>
+          
+            <div class="form-group dt-right">
+                <div class="col-md-12" style="text-align:right;">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

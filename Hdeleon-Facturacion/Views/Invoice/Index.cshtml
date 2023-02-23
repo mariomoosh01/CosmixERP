@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "Facturas";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="button" value="Nueva factura" class="btn btn-primary" onclick="jsOpenNew();" />
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Facturas
+        </div>
+        <div class="card-body">
+            <table id="table" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>RFC</th>
+                        <th>Serie</th>
+                        <th>Folio</th>
+                        
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>RFC</th>
+                        <th>Serie</th>
+                        <th>Folio</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        table=$('#table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "@Url.Content("~/Invoice/Json")",
+                "type": "POST",
+                "datatype": "json",
+                
+                },
+                "order": [[0, "desc"]],
+                "filter":false,
+                "orderMulti": false,
+                "pageLength": 10,
+           
+                "columns": [
+                    { "data": "Id", "name": "Id", "autoWidth": true },
+                     { "data": "sDateCreated", "name": "Fecha", "autoWidth": true },
+                    { "data": "RFCReceptor", "name": "RFC", "autoWidth": true },
+                    { "data": "Serie", "name": "Serie", "autoWidth": true },
+                    { "data": "Folio", "name": "Folio", "autoWidth": true }, 
+                    { "data": "Total", "name": "Total", "autoWidth": true },
+                    { "data": "Status", "name": "Status", "autoWidth": true }
+                ],
+            columnDefs: [{
+                targets: 0,
+                visible: false,
+            }, {
+                targets: [1, 2, 6],
+                "orderable": false
+            },
+            {
+                "targets": 7,
+                "responsivePriority": 1,
+                "data": null,
+                "width": "120",
+                "defaultContent": "<button title='Ver' class='btn btn-success show'><i class='fas fa-eye'></i></button> | "+
+                                  "<button title='Cancelar' class='btn btn-danger cancel'><i class='fas fa-minus-circle'></i></button>"
+            }
+            ],
+            "language": {
+                "lengthMenu": "@Hdeleon_Facturacion.Business.Constants.LengthMenu",
+                "zeroRecords": "@Hdeleon_Facturacion.Business.Constants.ZeroRecords",
+                "info": "@Hdeleon_Facturacion.Business.Constants.Info",
+                "infoEmpty": "@Hdeleon_Facturacion.Business.Constants.InfoEmpty",
+                "infoFiltered": "@Hdeleon_Facturacion.Business.Constants.InfoFiltered",
+                "paginate": {
+                    "previous": "@Hdeleon_Facturacion.Business.Constants.Previous",
+                    "next":"@Hdeleon_Facturacion.Business.Constants.Next"
+                }
+            }
+        });
+
+        $('#table tbody').on('click', '.show', function () {
+            var data = table.row($(this).parents('tr')).data();
+            document.location.href="@Url.Content("~/Invoice/Show")"+ "/?Id="+data.Id;
+        });
+        $('#table tbody').on('click', '.cancel', function () {
+            var data = table.row($(this).parents('tr')).data();
+            document.location.href = "@Url.Content("~/CancelInvoice/Cancel")" + `?Id=${data.Id}`;
+
+        });
+
+    });
+
+   
+
+    function jsOpenNew() {
+        document.location.href="@Url.Content("~/Invoice/Add")"
+    }
+
+
+</script>
+}

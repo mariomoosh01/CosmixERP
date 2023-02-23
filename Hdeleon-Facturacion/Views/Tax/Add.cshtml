@@ -1,0 +1,75 @@
+﻿@model Hdeleon_Facturacion.Models.ViewModels.TaxViewModel
+@{
+    ViewBag.Title = "Nuevo impuesto";
+    IEnumerable<SelectListItem> slcTax = (IEnumerable<SelectListItem>)ViewBag.slcTax;
+    IEnumerable<SelectListItem> slcType = (IEnumerable<SelectListItem>)ViewBag.slcType;
+    IEnumerable<SelectListItem> slcFactor = (IEnumerable<SelectListItem>)ViewBag.slcFactor;
+
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12 text-danger">
+        @ViewBag.Error
+    </div>
+</div>
+
+@using (Html.BeginForm("Add", "Tax", FormMethod.Post, new { id = "frm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Name)
+                @Html.TextBoxFor(d => d.Name, new { @class = "form-control", maxlength = "200" })
+                @Html.ValidationMessageFor(d => d.Name, "", new { @class = "text-danger", @id = "Name" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Type_Tax)
+                @Html.DropDownListFor(d => d.Type_Tax, slcTax, new { @class = "form-control", id = "iddEstado" })
+                @Html.ValidationMessageFor(d => d.Type_Tax, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Type)
+                @Html.DropDownListFor(d => d.Type, slcType, new { @class = "form-control", id = "iddEstado" })
+                @Html.ValidationMessageFor(d => d.Type, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Factor)
+                @Html.DropDownListFor(d => d.Factor, slcFactor, new { @class = "form-control", id = "iddEstado" })
+                @Html.ValidationMessageFor(d => d.Factor, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                *@Html.LabelFor(d => d.Tasa)
+                @Html.TextBoxFor(d => d.Tasa, new { @class = "form-control", type = "number" })
+                @Html.ValidationMessageFor(d => d.Tasa, "", new { @class = "text-danger" })
+            </div>
+          
+            <div class="form-group dt-right">
+                <div class="col-md-12" style="text-align:right;">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section scripts{
+
+    <script>
+
+$(document).ready(function () {
+   
+});
+
+
+    </script>
+
+}

@@ -1,0 +1,86 @@
+﻿@model Hdeleon_Facturacion.Models.ViewModels.InvoiceViewModel.Concepto
+@{
+    Layout = null;
+    int iImpuesto = 0;
+}
+
+<div class="card col-12" style="margin-top:10px;">
+
+    <div class="card-body" style="padding:1em;">
+
+
+        <h5 class="card-title">
+            @Model.descripcion
+            <input type="button" class="btn-danger" style="float:right;" value="X" onclick="$(this).parent().parent().parent().remove(); jsCalculateTotal();" />
+        </h5>
+        <div class="row" style="font-size:12px;">
+            <div class="col-md-6">
+                <label>Clave prod/serv: </label>
+                @Model.claveProducto<br />
+                <label>Clave unidad: </label>
+                @Model.claveUnidad<br />
+            </div>
+            <div class="col-md-2">
+                <label>Cantidad: </label>
+                @Model.cantidad<br />
+                <label>Precio: </label>
+                $ @Model.precioUnitario<br />
+            </div>
+
+            <div class="col-md-4">
+                <label>Descuento: </label>
+                @if (Model.descuento != null && Model.descuento > 0)
+                {@Html.Raw("$ " + Model.descuento)}<br />
+                <label>Importe: </label>
+                $ @Html.Raw(Model.cantidad * Model.precioUnitario)
+            </div>
+
+
+
+        </div>
+        @if (Model.impuestos != null && Model.impuestos.Count > 0)
+        {
+            <div class="row">
+
+                <div class="col-md-6 offset-6" style="text-align:right; font-size:11px;">
+                    <b>Impuestos</b><br />
+                    @foreach (var oImpuesto in Model.impuestos)
+                    {
+                        <b>@Html.Raw(oImpuesto.claveImpuesto + " " + oImpuesto.nombre)</b> @Html.Raw("(" + oImpuesto.tipo + " " + oImpuesto.tasa + " " + oImpuesto.factor + ")")
+                        <br />
+
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+    <input type="hidden" name="conceptos.Index" id="conceptos.Index" value="@Model.numConcepto" />
+    <input type="hidden" value="@Model.cantidad" name="conceptos[@Model.numConcepto].cantidad" id="conceptos[@Model.numConcepto].cantidad" />
+    <input type="hidden" value="@Model.precioUnitario" name="conceptos[@Model.numConcepto].precioUnitario" id="conceptos[@Model.numConcepto].precioUnitario" />
+    <input type="hidden" value="@Model.claveProducto" name="conceptos[@Model.numConcepto].claveProducto" id="conceptos[@Model.numConcepto].claveProducto" />
+    <input type="hidden" value="@Model.claveUnidad" name="conceptos[@Model.numConcepto].claveUnidad" id="conceptos[@Model.numConcepto].claveUnidad" />
+    <input type="hidden" value="@Model.descuento" name="conceptos[@Model.numConcepto].descuento" id="conceptos[@Model.numConcepto].descuento" class="descuento" />
+    <input type="hidden" value="@Model.descripcion" name="conceptos[@Model.numConcepto].descripcion" id="conceptos[@Model.numConcepto].descripcion" />
+    <input type="hidden" value="@Model.objetoImp" name="conceptos[@Model.numConcepto].objetoImp" id="conceptos[@Model.numConcepto].objetoImp" />
+    <input type="hidden" value="@Html.Raw(Model.cantidad * Model.precioUnitario)" class="importe" />
+    <div class="impuestos">
+
+        @foreach (var oTax in Model.impuestos)
+        {
+            <div class="imp">
+
+                <input type="hidden" value="@iImpuesto" name="conceptos[@Model.numConcepto].impuestos.Index" id="conceptos[@Model.numConcepto].impuestos.Index" />
+                <input type="hidden" value="@oTax.ambito" name="conceptos[@Model.numConcepto].impuestos[@iImpuesto].ambito" id="conceptos[@Model.numConcepto].impuestos[@iImpuesto].ambito" />
+                <input type="hidden" class="tipo" data-tipo="@oTax.tipo" value="@oTax.tipo" name="conceptos[@Model.numConcepto].impuestos[@iImpuesto].tipo" id="conceptos[@Model.numConcepto].impuestos[@iImpuesto].tipo" />
+                <input type="hidden" value="@oTax.factor" name="conceptos[@Model.numConcepto].impuestos[@iImpuesto].factor" id="conceptos[@Model.numConcepto].impuestos[@iImpuesto].factor" />
+                <input type="hidden" value="@oTax.claveImpuesto" name="conceptos[@Model.numConcepto].impuestos[@iImpuesto].claveImpuesto" id="conceptos[@Model.numConcepto].impuestos[@iImpuesto].claveImpuesto" />
+                <input type="hidden" class="tasa" data-tasa="@oTax.tasa" value="@oTax.tasa" name="conceptos[@Model.numConcepto].impuestos[@iImpuesto].tasa" id="conceptos[@Model.numConcepto].impuestos[@iImpuesto].tasa" />
+                <input type="hidden" value="@oTax.nombre" name="conceptos[@Model.numConcepto].impuestos[@iImpuesto].nombre" id="conceptos[@Model.numConcepto].impuestos[@iImpuesto].nombre" />
+                <input type="hidden" value="@oTax.importe" name="conceptos[@Model.numConcepto].impuestos[@iImpuesto].importe" id="conceptos[@Model.numConcepto].impuestos[@iImpuesto].importe" />
+                <input type="hidden" class="importeconcepto" data-importeconcepto="@Html.Raw(Model.cantidad * Model.precioUnitario)" value="@Html.Raw(Model.cantidad * Model.precioUnitario)" />
+            </div>
+            iImpuesto++;
+        }
+    </div>
+</div>
