@@ -2248,6 +2248,10 @@
       <Project>{e2fb2afb-8da7-44c2-af8e-4ed195b8552e}</Project>
       <Name>CFDI3_3</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CosmixERP.AccessLayer\CosmixERP.AccessLayer.csproj">
+      <Project>{C0A8BF3D-837C-4AA9-BADE-8355CE774E50}</Project>
+      <Name>CosmixERP.AccessLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

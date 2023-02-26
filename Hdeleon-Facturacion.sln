@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hdeleon-Facturacion", "Hdel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFDI3_3", "CFDI3_3\CFDI3_3.csproj", "{E2FB2AFB-8DA7-44C2-AF8E-4ED195B8552E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmixERP.AccessLayer", "CosmixERP.AccessLayer\CosmixERP.AccessLayer.csproj", "{697F9A8E-D9E6-477D-8C3D-BD5514655E4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmixERP.AccessLayer", "CosmixERP.AccessLayer\CosmixERP.AccessLayer.csproj", "{C0A8BF3D-837C-4AA9-BADE-8355CE774E50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{E2FB2AFB-8DA7-44C2-AF8E-4ED195B8552E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2FB2AFB-8DA7-44C2-AF8E-4ED195B8552E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2FB2AFB-8DA7-44C2-AF8E-4ED195B8552E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{697F9A8E-D9E6-477D-8C3D-BD5514655E4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{697F9A8E-D9E6-477D-8C3D-BD5514655E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{697F9A8E-D9E6-477D-8C3D-BD5514655E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{697F9A8E-D9E6-477D-8C3D-BD5514655E4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0A8BF3D-837C-4AA9-BADE-8355CE774E50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A8BF3D-837C-4AA9-BADE-8355CE774E50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A8BF3D-837C-4AA9-BADE-8355CE774E50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A8BF3D-837C-4AA9-BADE-8355CE774E50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
