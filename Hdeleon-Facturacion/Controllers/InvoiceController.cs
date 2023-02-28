@@ -1,16 +1,24 @@
-﻿using Hdeleon_Facturacion.Models.Catalogs;
+﻿using CosmixERP.AccessLayer.Services;
+using Hdeleon_Facturacion.Models.Catalogs;
 using Hdeleon_Facturacion.Models.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Hdeleon_Facturacion.Controllers
 {
     public class InvoiceController : BaseCrudController<Models.ViewModels.TableInvoiceViewModel>
     {
-       
+        private InvoicesServices _invoicesServices;
+
+        public InvoiceController()
+        {
+            _invoicesServices = new InvoicesServices();
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -186,9 +194,16 @@ namespace Hdeleon_Facturacion.Controllers
         }
         */
 
+        public async Task<ActionResult> GetTicketrDetail(int ticketNo)
+        {
+            var detail = await _invoicesServices.GetInvoiceDetail(ticketNo);
+
+            return Json(JsonConvert.SerializeObject(detail),JsonRequestBehavior.AllowGet);
+        }
+
         #region Second ActionResult
         public ActionResult AddConcepto(Models.ViewModels.InvoiceViewModel.Concepto concepto)
-        {
+        { 
             //llenamos impuestos
             if (concepto.Taxes!=null && concepto.Taxes.Count > 0)
             {

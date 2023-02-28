@@ -143,14 +143,23 @@
         <div class="tab-pane container" id="conceptos">
             <br />
             <div class="row">
+                <div class="col-auto">
+                    <b>Numero de Ticket</b>
+                    <div class="row">
+                        <div class="col-8">@Html.TextBox("bTicket", "", new { @class = "form-control form-control-sm", id = "bTicket", placeholder = "Escribe numero de ticket" })</div>
+                        <div class="col"><button class="btn btn-secondary" style="float:right;" type="button" onclick="SearchTicket()">Buscar</button></div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="row">
                 <div class="col-md-12">
                     <b>Buscador de producto</b>
                     @Html.TextBox("bProduct", "", new { @class = "form-control form-control-sm", id = "bProduct", placeholder = "Escribe para comenzar a buscar" })
 
                 </div>
-            </div>
+            </div>*@
            
-            <div class="row">
+            @*<div class="row">
                 <div class="col-md-4">
                     <label>*Cantidad</label>
                     @Html.TextBox("cantidad", "", new { @class = "form-control form-control-sm", type="number" })
@@ -219,10 +228,9 @@
                     <input onclick="jsAddConcepto();" type="button" value="+ Agregar concepto" class="btn btn-success" />
                 </div>
 
-            </div>
-            <div class="row" id="divConceptos">
-                
-
+            </div>*@
+            <div class="row" id="divTickets"></div>
+            <div class="row" id="divConceptos">                
             </div>
         </div>
 
@@ -247,7 +255,7 @@
 
 @section scripts{
 
-<script>
+    <script>
     var numConcepto = 0;
         $(document).ready(function () {
 
@@ -268,7 +276,7 @@
                                 return { label: item.Value, value: item.Id };
                             }))
                         },
-                       
+
                     })
                 },
                 select: function (event, ui) {
@@ -320,7 +328,7 @@
                 },
                  select: function (event, ui) {
                      if (ui != null && ui.item != null) {
-                         
+
                          console.log(ui.item.value);
                          document.getElementById("RFCCliente").value = ui.item.value.RFC;
                          document.getElementById("RazonSocial").value = ui.item.value.Name;
@@ -334,7 +342,7 @@
                          jsGetMunicipios(function () { //se ejecuta como callback
                              document.getElementById("Municipio").value = ui.item.value.IdMunicipio;
                          })
-  
+
                      }
                      setTimeout(function () {
                          document.getElementById("bCustomer").value = "";
@@ -361,14 +369,14 @@
                 },
                  select: function (event, ui) {
                      if (ui != null && ui.item != null) {
-                         
+
                          console.log(ui.item.value);
                          document.getElementById("descripcion").value = ui.item.value.Descripcion;
                          document.getElementById("precioUnitario").value = ui.item.value.Precio;
                          document.getElementById("claveProducto").value = ui.item.value.ClaveProdServ;
                          document.getElementById("claveUnidad").value = ui.item.value.ClaveUnidad;
                          document.getElementById("cantidad").focus();
-  
+
                      }
                      setTimeout(function () {
                          document.getElementById("bProduct").value = "";
@@ -384,7 +392,7 @@
                  jsShowWindowLoad("Realizando la factura");
                  let parametros = $(this).serialize();
                  let url = $(this).prop("action");
-                 
+
                  $.post(url, parametros, function (data) {
                      jsRemoveWindowLoad();
                      if (data.includes("Error"))
@@ -416,7 +424,7 @@
             $("#Estado").change();
 
             //funcionalidad impuestos
-            document.getElementById("objetoImp").addEventListener("change", (event) => {
+            /*document.getElementById("objetoImp").addEventListener("change", (event) => {
                 if (event.target.value === "01") {
                     document.getElementById("divSlcImpuestos").style.display = "none";
                     document.querySelectorAll(".taxes").forEach(e => e.checked = false)
@@ -424,7 +432,7 @@
                 else {
                     document.getElementById("divSlcImpuestos").style.display = "block";
                 }
-            });
+            });*/
 
             // div Información global
             document.getElementById("hasInformacionGlobal").addEventListener("change", (event) => {
@@ -433,44 +441,66 @@
             })
         })
 
+    function SearchTicket() {
+        const ticket = $("#bTicket").val();
+        
+        $.get("@Url.Content("~/Invoice/GetTicketrDetail")", "ticketNo=" + ticket, function (data, textStatus) {
+            const url = "@Url.Content("~/Invoice/AddConcepto")";
+            const conceptos = JSON.parse(data);
+            const ticketDiv = `<div class="col-auto"><div class="ticket-div">${ticket}</div></div>`;
 
-        function jsAddConcepto() {
-            //validación
-            if (document.getElementById("cantidad").value == "" ||
-               document.getElementById("descripcion").value=="" ||
-                document.getElementById("precioUnitario").value=="" ||
-                document.getElementById("claveProducto").value=="" ||
-                document.getElementById("claveUnidad").value == "") {
-                MessageError("La cantidad, descripción, precio unitario, clave producto y clave unidad son obligatorias");
-                return;
-            }
-
-            var parametros = $("#conceptos :input").serialize() + "&numConcepto=" + numConcepto;
-            var url="@Url.Content("~/Invoice/AddConcepto")"
-         
-            $.post(url, parametros, function (data) {
-
-                $("#divConceptos").append(data);
-
-                //borramos valores
-                document.getElementById("cantidad").value = "";
-                document.getElementById("descripcion").value = "";
-                document.getElementById("precioUnitario").value = "";
-                document.getElementById("claveProducto").value = "";
-                document.getElementById("claveUnidad").value = "";
-                document.getElementById("descuento").value = "";
-                document.getElementById("spanClaveUnidad").innerHTML = "";
-                document.getElementById("spanClaveProdServ").innerHTML = "";
-
-                //calculamos
-                jsCalculateTotal();
-
-            })
-
-            numConcepto++;
-
+            $("#divTickets").append(ticketDiv);
             
+            conceptos.map( (concepto,idx) => {
+                const parametros = `cantidad=${concepto.Cantidad}&descripcion=${concepto.Product.Parte}&descuento=0&precioUnitario=${concepto.Product.Precio1}&claveProducto=${concepto.Product.ClaveSat}&claveUnidad=${concepto.Product.UnidadSat}&objetoImp=02&Taxes%5B%5D=1&numConcepto=${idx}`;
+
+                $.post(url, parametros, function (data) {
+                    $("#divConceptos").append(data);
+                    jsCalculateTotal();
+                });
+            });            
+        },"json");
+    }
+
+    function jsAddConcepto() {
+        //validación
+        if (document.getElementById("cantidad").value == "" ||
+            document.getElementById("descripcion").value=="" ||
+            document.getElementById("precioUnitario").value=="" ||
+            document.getElementById("claveProducto").value=="" ||
+            document.getElementById("claveUnidad").value == "") {
+            MessageError("La cantidad, descripción, precio unitario, clave producto y clave unidad son obligatorias");
+            return;
         }
+
+        var parametros = $("#conceptos :input").serialize() + "&numConcepto=" + numConcepto;
+        console.log(parametros);
+        var url="@Url.Content("~/Invoice/AddConcepto")"
+
+        $.post(url, parametros, function (data) {
+
+            $("#divConceptos").append(data);
+
+            //borramos valores
+            document.getElementById("cantidad").value = "";
+            document.getElementById("descripcion").value = "";
+            document.getElementById("precioUnitario").value = "";
+            document.getElementById("claveProducto").value = "";
+            document.getElementById("claveUnidad").value = "";
+            document.getElementById("descuento").value = "";
+            document.getElementById("spanClaveUnidad").innerHTML = "";
+            document.getElementById("spanClaveProdServ").innerHTML = "";
+
+            //calculamos
+            jsCalculateTotal();
+
+        })
+
+        numConcepto++;
+
+
+}
+
     function jsGetMunicipios(fnCallBack) {
         let IdEstado = $("#Estado").val();
 
@@ -483,7 +513,8 @@
             if (fnCallBack !== undefined)
                 fnCallBack();
         })
-    }
+        }
+
     function jsCalculateTotal() {
         let descuento = 0;
         let subtotal = 0;
@@ -501,11 +532,9 @@
         $(".imp").each(function () {
             let importeConcepto = $(this).find(".importeconcepto").prop("value");
             let tasa = $(this).find(".tasa").prop("value");
-            let tipo = $(this).find(".tipo").prop("value");
-            console.log(tasa);
-            console.log(tipo);
-            console.log(importeConcepto);
+            let tipo = $(this).find(".tipo").prop("value");            
             let importeImpuesto = parseFloat(tasa) * parseFloat(importeConcepto);
+
             if (tipo == "Traslado")
                 TotalImpuestosTrasladados += parseFloat(importeImpuesto);
             else if (tipo == "Retención")
@@ -521,8 +550,8 @@
         $("#sRetenciones").html(totalImpuestosRetenidos.toFixed(2));
         $("#sTraslados").html(TotalImpuestosTrasladados.toFixed(2));
         $("#sTotal").html(total.toFixed(2));
-        
+
     }
-</script>
+    </script>
    
 }
