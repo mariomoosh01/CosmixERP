@@ -145,8 +145,10 @@
             <div class="row">
                 <div class="col-auto">
                     <b>Numero de Ticket</b>
-                    @Html.TextBox("bTicket", "", new { @class = "form-control form-control-sm", id = "bTicket", placeholder = "Escribe numero de ticket" })
-                    <button class="btn btn-secondary" type="button" onclick="SearchTicket()">Buscar</button>
+                    <div class="row">
+                        <div class="col-8">@Html.TextBox("bTicket", "", new { @class = "form-control form-control-sm", id = "bTicket", placeholder = "Escribe numero de ticket" })</div>
+                        <div class="col"><button class="btn btn-secondary" style="float:right;" type="button" onclick="SearchTicket()">Buscar</button></div>
+                    </div>
                 </div>
             </div>
             @*<div class="row">
@@ -227,9 +229,8 @@
                 </div>
 
             </div>*@
-            <div class="row" id="divConceptos">
-                
-
+            <div class="row" id="divTickets"></div>
+            <div class="row" id="divConceptos">                
             </div>
         </div>
 
@@ -442,10 +443,13 @@
 
     function SearchTicket() {
         const ticket = $("#bTicket").val();
-        //bTicket=&cantidad=1&descripcion=asdasd&descuento=0&precioUnitario=123&claveProducto=10201933&claveUnidad=69&objetoImp=02&Taxes%5B%5D=1&numConcepto=0
+        
         $.get("@Url.Content("~/Invoice/GetTicketrDetail")", "ticketNo=" + ticket, function (data, textStatus) {
             const url = "@Url.Content("~/Invoice/AddConcepto")";
             const conceptos = JSON.parse(data);
+            const ticketDiv = `<div class="col-auto"><div class="ticket-div">${ticket}</div></div>`;
+
+            $("#divTickets").append(ticketDiv);
             
             conceptos.map( (concepto,idx) => {
                 const parametros = `cantidad=${concepto.Cantidad}&descripcion=${concepto.Product.Parte}&descuento=0&precioUnitario=${concepto.Product.Precio1}&claveProducto=${concepto.Product.ClaveSat}&claveUnidad=${concepto.Product.UnidadSat}&objetoImp=02&Taxes%5B%5D=1&numConcepto=${idx}`;
@@ -528,11 +532,9 @@
         $(".imp").each(function () {
             let importeConcepto = $(this).find(".importeconcepto").prop("value");
             let tasa = $(this).find(".tasa").prop("value");
-            let tipo = $(this).find(".tipo").prop("value");
-            console.log(tasa);
-            console.log(tipo);
-            console.log(importeConcepto);
+            let tipo = $(this).find(".tipo").prop("value");            
             let importeImpuesto = parseFloat(tasa) * parseFloat(importeConcepto);
+
             if (tipo == "Traslado")
                 TotalImpuestosTrasladados += parseFloat(importeImpuesto);
             else if (tipo == "Retención")
