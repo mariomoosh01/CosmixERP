@@ -24,8 +24,7 @@ namespace CosmixERP.AccessLayer.Services
         public async Task<List<ReceiptsProducts>> GetInvoiceDetail(int invoice)
         {
             try
-            {
-                // $"select a.Id, a.Producto, a.Cantidad, a.Fecha, a.Saldo, '' as Split, b.Id, b.Parte, b.Precio1, b.Precio2, b.UnidadSat, b.ClaveSat " +
+            {                
                 var sql = $"select a.Id, a.Producto, a.Cantidad, a.Fecha, a.Saldo, 1 as Split, b.Id as ProductId, b.Parte, b.Precio1, b.Precio2, b.UnidadSat, b.ClaveSat " +
                         $"from TblCtrl_KardexVentas a " +
                         $"inner join TblCat_Productos b on a.Producto = b.Id " +

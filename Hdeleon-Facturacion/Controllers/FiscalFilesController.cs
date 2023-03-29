@@ -1,10 +1,7 @@
 ﻿using Hdeleon_Facturacion.Business.Cancel;
 using Hdeleon_Facturacion.Models.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Hdeleon_Facturacion.Controllers
@@ -12,6 +9,7 @@ namespace Hdeleon_Facturacion.Controllers
     public class FiscalFilesController : BaseController
     {
         Models.Entities db;
+
         public FiscalFilesController()
         {
             db = new Models.Entities();

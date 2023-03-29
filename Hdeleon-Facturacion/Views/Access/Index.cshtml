@@ -46,7 +46,7 @@
             params = $(this).serialize();
             $.post(url, params, function (data) {
                 if (data == "1") {
-                    document.location.href="@Url.Content("~/")"
+                    document.location.href="@Url.Content("~/Home/Index")"
                 }else{
                     alert(data);
                 }
