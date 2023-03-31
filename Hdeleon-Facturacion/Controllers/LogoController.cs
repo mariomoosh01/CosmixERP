@@ -28,7 +28,7 @@ namespace Hdeleon_Facturacion.Controllers
         {
             try
             {
-                GetSession();
+                //GetSession();
                 string PathLogo = Path.Combine(Server.MapPath("~/"), Business.Constants.PathLogo);
 
                 if (!ModelState.IsValid)

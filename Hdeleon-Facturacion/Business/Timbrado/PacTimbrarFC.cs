@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
+﻿using Hdeleon_Facturacion.ServiceReference1;
+using System;
 
 namespace Hdeleon_Facturacion.Business.Timbrado
 {
@@ -16,9 +13,10 @@ namespace Hdeleon_Facturacion.Business.Timbrado
         public override void Timbrar(byte[] bXml)
         {
 
-            ServiceReference1.RespuestaCFDi respuestaCFDI = new ServiceReference1.RespuestaCFDi();
+            RespuestaCFDi respuestaCFDI = new RespuestaCFDi();
 
-            ServiceReference1.TimbradoClient oTimbrado = new ServiceReference1.TimbradoClient();
+            TimbradoClient oTimbrado = new TimbradoClient();
+
             if(Business.Constants.TEST)
                 respuestaCFDI = oTimbrado.TimbrarTest(UserPac,PassPac, bXml); //prueba
             else

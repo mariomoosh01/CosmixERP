@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Hdeleon_Facturacion.Models;
+using Hdeleon_Facturacion.Utils;
 
 namespace Hdeleon_Facturacion.Controllers
 {
@@ -31,7 +30,9 @@ namespace Hdeleon_Facturacion.Controllers
                     if (lstUser.Count() > 0)
                     {
                         var oUser = lstUser.First();
-                        Session["User"] = oUser;
+                        
+                        Session["User"] = oUser;                        
+                        GlobalParams.User = oUser;
 
                         return Content("1");
                     }else

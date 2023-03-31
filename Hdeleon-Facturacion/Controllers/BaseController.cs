@@ -6,14 +6,12 @@ namespace Hdeleon_Facturacion.Controllers
     public class BaseController : Controller
     {
         private user user { get; set; }
-        public user User
-        {
-            get { return user; }
-        }
+
+        public user User => user;
         public void GetSession()
         {
             user = (user)Session["user"];   
-        }
+        }               
 
         /// <summary>
         /// Obtiene los errores del modelo

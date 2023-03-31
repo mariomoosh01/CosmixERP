@@ -1,6 +1,8 @@
 ﻿using CosmixERP.AccessLayer.Services;
+using Hdeleon_Facturacion.Models;
 using Hdeleon_Facturacion.Models.Catalogs;
 using Hdeleon_Facturacion.Models.ViewModels;
+using Hdeleon_Facturacion.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -57,6 +59,7 @@ namespace Hdeleon_Facturacion.Controllers
 
         public ActionResult Add()
         {
+            GetSession();
             InvoiceViewModel model = new InvoiceViewModel();
             
             model.Fecha = DateTime.Now;
@@ -72,7 +75,7 @@ namespace Hdeleon_Facturacion.Controllers
             try
             {
                 GetSession();
-
+                var caca = GlobalParams.User;
                 //validación
                 if(!ModelState.IsValid)
                 {

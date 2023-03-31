@@ -14,7 +14,7 @@ namespace Hdeleon_Facturacion.Filters
 
             if (oUser == null)
             {
-                if(filterContext.Controller is AccessController == false)
+                if(filterContext.Controller is AccessController == false && filterContext.Controller is InvoiceController == false)
                 {
                     filterContext.HttpContext.Response.Redirect("/Access/Index");
                 }
