@@ -452,6 +452,7 @@
     <Compile Include="Models\ViewModels\TaxViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Encrypt.cs" />
+    <Compile Include="GlobalParams.cs" />
     <Compile Include="Utils\opensslkey.cs" />
     <Compile Include="Utils\SelloDigital.cs" />
     <Compile Include="Utils\StringWriterWithEnconding.cs" />
@@ -522,6 +523,9 @@
     <Content Include="Models\SAT\SATDB.edmx.diagram">
       <DependentUpon>SATDB.edmx</DependentUpon>
     </Content>
+    <None Include="Connected Services\ServiceReference1\Timbrado4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.0.intellisense.js" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />

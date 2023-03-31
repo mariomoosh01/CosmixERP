@@ -42,7 +42,7 @@ namespace Hdeleon_Facturacion.Controllers
                     return View(model);
                 }
 
-                GetSession();
+                //GetSession();
 
                 using (Models.Entities db = new Models.Entities())
                 {

@@ -29,7 +29,7 @@ namespace Hdeleon_Facturacion.Controllers
         {
             try
             {
-                GetSession();
+                //GetSession();
                 string PathCer = Path.Combine(Server.MapPath("~/"), Business.Constants.PathCer);
                 string PathKey = Path.Combine(Server.MapPath("~/"), Business.Constants.PathKey);
                 string PathPfx = Path.Combine(Server.MapPath("~/"), Business.Constants.PathPfx);

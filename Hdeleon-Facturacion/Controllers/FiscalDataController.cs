@@ -43,7 +43,7 @@ namespace Hdeleon_Facturacion.Controllers
         {
             try
             {
-                GetSession();
+                //GetSession();
 
                 if (!ModelState.IsValid)
                 {
