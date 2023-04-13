@@ -158,7 +158,7 @@ namespace Hdeleon_Facturacion.Business
             List<ComprobanteImpuestosRetencion> lstComprobanteImpuestoRetenidos = new List<ComprobanteImpuestosRetencion>(); //nodo comprobante
             foreach (Concepto conceptoVM in factura.conceptos) {
 
-                decimal importeTotal = Math.Round( conceptoVM.cantidad * conceptoVM.precioUnitario);
+                decimal importeTotal = Math.Round( conceptoVM.cantidad * conceptoVM.precioUnitario,2);
                 decimal totalConceptoSinDescuento = importeTotal;
                 if (conceptoVM.descuento > 0)
                 {

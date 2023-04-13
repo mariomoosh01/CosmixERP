@@ -10,7 +10,7 @@ namespace CosmixERP.AccessLayer
     {
         #region Constants
 
-        private const string CONN_STRING = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Git\\GitHub\\CosmixERP\\Hdeleon-Facturacion\\bin\\AccessDb\\DESS_Autopartes_DB.mdb;Jet OLEDB:Database Password=acs114;";
+        private const string CONN_STRING = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\DESS_Refaccionaria_2\\Db\\DESS_Autopartes_DB.mdb;Jet OLEDB:Database Password=acs114;";
 
         #endregion
 
