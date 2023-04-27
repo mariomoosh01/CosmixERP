@@ -1,5 +1,6 @@
 ﻿using CosmixERP.AccessLayer.DataAccess.Entities;
 using Dapper;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace CosmixERP.AccessLayer.Services
 {
     public class InvoicesServices: AccessDbContext
     {
+        public ILogger log;
         public InvoicesServices()
         {
             
@@ -39,7 +41,7 @@ namespace CosmixERP.AccessLayer.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);                
+                log.Error(ex.Message);                
             }
             return null;
         }

@@ -19,6 +19,7 @@ namespace Hdeleon_Facturacion.Controllers
         public InvoiceController()
         {
             _invoicesServices = new InvoicesServices();
+            _invoicesServices.log = SerilogClass._log;
         }
 
         public ActionResult Index()
@@ -199,9 +200,18 @@ namespace Hdeleon_Facturacion.Controllers
 
         public async Task<ActionResult> GetTicketrDetail(int ticketNo)
         {
-            var detail = await _invoicesServices.GetInvoiceDetail(ticketNo);
+            try
+            {
+                var detail = await _invoicesServices.GetInvoiceDetail(ticketNo);
 
-            return Json(JsonConvert.SerializeObject(detail),JsonRequestBehavior.AllowGet);
+                return Json(JsonConvert.SerializeObject(detail), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                SerilogClass._log.Error(ex.Message);
+            }
+
+            return Json(JsonConvert.SerializeObject(new string[0]),JsonRequestBehavior.AllowGet);
         }
 
         #region Second ActionResult
