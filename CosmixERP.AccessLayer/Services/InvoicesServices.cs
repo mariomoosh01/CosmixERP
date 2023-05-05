@@ -27,7 +27,7 @@ namespace CosmixERP.AccessLayer.Services
         {
             try
             {                
-                var sql = $"select a.Id, a.Producto, a.Cantidad, a.Fecha, a.Saldo, 1 as Split, b.Id as ProductId, b.Parte, b.Precio1, b.Precio2, b.UnidadSat, b.ClaveSat " +
+                var sql = $"select a.Id, a.Producto, a.Cantidad, a.Fecha, a.Saldo, a.precio , 1 as Split, b.Id as ProductId, b.Parte, b.Precio1, b.Precio2, b.UnidadSat, b.ClaveSat " +
                         $"from TblCtrl_KardexVentas a " +
                         $"inner join TblCat_Productos b on a.Producto = b.Id " +
                         $"where a.Saldo={invoice}";

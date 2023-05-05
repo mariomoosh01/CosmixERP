@@ -452,7 +452,7 @@
             $("#divTickets").append(ticketDiv);
             
             conceptos.map( (concepto,idx) => {
-                const parametros = `cantidad=${concepto.Cantidad}&descripcion=${concepto.Product.Parte}&descuento=0&precioUnitario=${concepto.Product.Precio1}&claveProducto=${concepto.Product.ClaveSat}&claveUnidad=${concepto.Product.UnidadSat}&objetoImp=02&Taxes%5B%5D=1&numConcepto=${idx}`;
+                const parametros = `cantidad=${concepto.Cantidad}&descripcion=${concepto.Product.Parte}&descuento=0&precioUnitario=${concepto.Precio}&claveProducto=${concepto.Product.ClaveSat}&claveUnidad=${concepto.Product.UnidadSat}&objetoImp=02&Taxes%5B%5D=1&numConcepto=${idx}`;
 
                 $.post(url, parametros, function (data) {
                     $("#divConceptos").append(data);
